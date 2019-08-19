@@ -106,4 +106,5 @@ import {ShortCut} from 'ele-plus'
     ignore:[]//需要忽略的元素  disabled、select、radio、checkbox、date、multi_select (默认忽略：'radio', 'checkbox', 'disabled')
   },
   ```
-    
+  ### 防抖按钮：elp-button
+  > 使用与el-button的使用方法一致,只是增加了防抖

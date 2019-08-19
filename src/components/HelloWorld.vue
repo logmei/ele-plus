@@ -44,7 +44,7 @@
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
-  <el-button @click="visible=true">弹出框</el-button>
+  <elp-button @click="visible=true">弹出框</elp-button>
     <elp-dialog :visible.sync="visible" slideOutType="rightSide"></elp-dialog>
     <elp-search v-model="value"></elp-search>
   </div>

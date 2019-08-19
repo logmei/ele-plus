@@ -13,7 +13,7 @@
 <script>
 import { debounce } from '../../utils/index.js'
 export default {
-  name:'elp-search',
+  name:'ElpSearch',
   props: {
     value: {
       type: String,

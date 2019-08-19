@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name:'elp-svg-icon',
+  name:'ElpSvgIcon',
   props: {
     iconClass: {
       type: String,

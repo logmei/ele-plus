@@ -79,7 +79,7 @@ const DIRECTION = {
   }
 }
 export default {
-  name:'elp-dialog',
+  name:'ElpDialog',
   props: {
     title: {
       type: String,
