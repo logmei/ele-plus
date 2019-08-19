@@ -15,7 +15,7 @@
   </el-button>
 </template>
 <script>
-import { debounce } from '@p/utils/index.js'
+import { debounce } from '../../utils/index.js'
 export default {
   name: 'ElpButton',
   props: {
