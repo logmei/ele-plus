@@ -1,5 +1,5 @@
 # ele-plus
-
+## 版本详细说明，请查看doc下面的版本文件
 ## 安装
 ```
 npm install ele-plus -S
@@ -30,7 +30,7 @@ Vue.use(ElpDialog)
 Vue.use(ElpSearch)
 Vue.use(ElpSvgIcon)
 ```
-## 组件使用说明
+## 组件使用说明 v0.1.5
 ### 弹出框：elp-dialog
 > 增加了滑出效果
 #### 使用与el-dialog的使用方法一致，只是增加了滑出效果的属性slideOutType
@@ -70,7 +70,7 @@ import {ShortCut} from 'ele-plus'
  Vue.use(ShortCut)
 ``` 
 * 4、指令```v-shortCut```
- > ##### 1.0版本
+
  > * 指令名：keydown
  > * 修饰符：keyDown（回车和上下左右键）、arrow（上下左右键）、enter（回车键）、self（指定元素）
 #### 接收值说明
@@ -96,15 +96,21 @@ import {ShortCut} from 'ele-plus'
   ```
    >* Object：
    
- ```js
- shortCutObj: {
-    rowCount: 11,//值为一行的操作元素个数，用于上下键
-    callBack: () => {//获取最后一个元素触发的回调函数
-      return this.addRow()
-    },
-    parenClassName: 'el-table__body-wrapper', //父元素class下的所有操作元素
-    ignore:[]//需要忽略的元素  disabled、select、radio、checkbox、date、multi_select (默认忽略：'radio', 'checkbox', 'disabled')
-  },
-  ```
+  ```js
+  data(){
+    return {
+      shortCutObj: {
+        rowCount: 11,//值为一行的操作元素个数，用于上下键
+        callBack: () => {//获取最后一个元素触发的回调函数
+          return this.addRow()
+        },
+        parenClassName: 'el-table__body-wrapper', //父元素class下的所有操作元素
+        ignore:['elpignore']//可以忽略元素： disabled、select、radio、checkbox、date、multi_select,elpignore (默认忽略：'radio', 'checkbox', 'disabled')
+      },
+    }
+  }
+    ```
   ### 防抖按钮：elp-button
   > 使用与el-button的使用方法一致,只是增加了防抖
+
+  

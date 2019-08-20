@@ -49,7 +49,33 @@ import shortCut from '@/directive/short-cut'
       return this.addRow()
     },
     parenClassName: 'el-table__body-wrapper', //父元素class下的所有操作元素
-    ignore:[]//需要忽略的元素  disabled、select、radio、checkbox、date、multi_select (默认忽略：'radio', 'checkbox', 'disabled')
+    ignore:[]//可以忽略元素： disabled、select、radio、checkbox、date、multi_select (默认忽略：'radio', 'checkbox', 'disabled')
   },
   ```
-    
+
+
+  > ### 1.1 版本
+  #### 忽略元素增加elpignore属性选项
+  > 示例：
+  * 1、
+  ```js
+      <input 
+        v-model="scope.row.productBatchNo"
+        elpignore
+      >
+  ```
+  * 2、data中的绑定对象中的ignore增加忽略属性
+  ```js
+  data(){
+    return {
+      shortCutObj: {
+    rowCount: 11,//值为一行的操作元素个数，用于上下键
+    callBack: () => {//获取最后一个元素触发的回调函数
+      return this.addRow()
+    },
+    parenClassName: 'el-table__body-wrapper', //父元素class下的所有操作元素
+    ignore:['elpignore']//可以忽略元素： disabled、select、radio、checkbox、date、multi_select,elpignore (默认忽略：'radio', 'checkbox', 'disabled')
+  },
+    }
+  }
+    ```

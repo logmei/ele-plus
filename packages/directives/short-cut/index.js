@@ -1,6 +1,6 @@
 import KeyDownKey from './common/keydown.js'
 const shortCut = {
-  name:'shortCut',
+  name: 'shortCut',
   inserted: function(el, binding, vnode) {
     switch (binding.arg) {
       case 'keydown' :

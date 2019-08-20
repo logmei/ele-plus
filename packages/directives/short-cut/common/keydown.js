@@ -7,6 +7,7 @@ import ChooseByKeydownClass from './ChooseByKeydownClass.js'
  */
 function conChoose(funKey) {
   return function(el, binding, vnode) {
+    // console.log('conChoose.....................')
     const chooseByKeydown = ChooseByKeydownClass.getInstance()
     chooseByKeydown.initParams(el, binding, vnode)// 重新获取inputs
     chooseByKeydown.resetIndex()// 重置index
@@ -14,9 +15,14 @@ function conChoose(funKey) {
     const action = conChooseAction(chooseByKeydown) // 操作action
     const methodNames = METHODS_FUN[funKey] // 对应功能的methodlist
     chooseByKeydown.inputs.forEach((element, index) => {
-      element.addEventListener('keydown', function(e) {
-        // console.log('conChoose', Object.keys(methodNames), e.keyCode, Object.keys(methodNames).indexOf('' + e.keyCode))
+      const hasEvent = element.getAttribute('hasElePlusEvent')
+      if (hasEvent) return
+      element.setAttribute('hasElePlusEvent', '1')
+      element.addEventListener('keyup', function(e) {
+        e.preventDefault()
+        // e.stopPropagation()
         if (isTriggerAction(e, chooseByKeydown, methodNames)) {
+          //console.log('conChoose', Object.keys(methodNames), e.keyCode, Object.keys(methodNames).indexOf('' + e.keyCode))
           action(methodNames[e.keyCode], index)
         }
       })

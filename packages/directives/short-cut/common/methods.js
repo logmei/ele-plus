@@ -88,6 +88,10 @@ function appointElementFocus(chooseByKeyEntity) {
  */
 function isMatchedDom(type) {
   switch (type) {
+    case 'elpignore':
+      return function(ele) {
+        return ele ? (ele.getAttribute(type) === 'elpignore') : false
+      }
     case 'disabled':
       return function(ele) {
         return ele ? (ele.getAttribute(type) === true) : false
@@ -123,6 +127,7 @@ function isMatchedDom(type) {
   }
 }
 const IS_MATCH = {
+  elpignore: isMatchedDom('elpignore'),
   disabled: isMatchedDom('disabled'),
   readonly: isMatchedDom('readonly'),
   select: isMatchedDom('select'),
