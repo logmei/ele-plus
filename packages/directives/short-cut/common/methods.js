@@ -90,7 +90,7 @@ function isMatchedDom(type) {
   switch (type) {
     case 'elpignore':
       return function(ele) {
-        return ele ? (ele.getAttribute(type) === 'elpignore') : false
+        return ele ? (ele.hasAttribute('elpignore')) : false
       }
     case 'disabled':
       return function(ele) {

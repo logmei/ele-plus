@@ -1,5 +1,6 @@
-# ele-plus
+# ele-plus 
 ## 版本详细说明，请查看doc下面的版本文件
+## 最新版本 v0.1.8
 ## 安装
 ```
 npm install ele-plus -S
@@ -30,7 +31,7 @@ Vue.use(ElpDialog)
 Vue.use(ElpSearch)
 Vue.use(ElpSvgIcon)
 ```
-## 组件使用说明 v0.1.5
+## 组件使用说明 
 ### 弹出框：elp-dialog
 > 增加了滑出效果
 #### 使用与el-dialog的使用方法一致，只是增加了滑出效果的属性slideOutType
