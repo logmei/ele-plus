@@ -1,4 +1,4 @@
-# ele-plus 
+### [代码仓库](https://github.com/logmei/ele-plus.git)
 ## 版本详细说明，请查看doc下面的版本文件
 ## 最新版本 v0.1.8
 ## 安装
@@ -71,19 +71,32 @@ import {ShortCut} from 'ele-plus'
  Vue.use(ShortCut)
 ``` 
 * 4、指令```v-shortCut```
-
+> 绑定到父元素即可
  > * 指令名：keydown
  > * 修饰符：keyDown（回车和上下左右键）、arrow（上下左右键）、enter（回车键）、self（指定元素）
 #### 接收值说明
- >##### 1、self（value接收值为id的值或id的数组）
+ ##### 1、self（value接收值为id的值或id的数组）
+  > 用于指定固定元素获取焦点
    >* 字符串：
-    ```js
-    v-shortCut:keydown.keyDown.self="'aa'"
-    ```
-   >* 数组：```js
-   v-shortCut:keydown.keyDown.self="['aa','bb','cc','dd']"
-    ```
->##### 2、其他修饰符
+```js
+    //form中也可使用
+  <el-form v-shortCut:keydown.keyDown.self="'aa'">
+  <el-input id='aa'><el-input>
+  <el-form>
+```
+    
+   >* 数组：
+  ```js
+   <el-form v-shortCut:keydown.keyDown.self="['aa','bb','cc','dd']">
+  ...
+    <el-input id='aa'><el-input>
+    <el-input id='bb'><el-input>
+    <el-input id='cc'><el-input>
+    <el-input id='dd'><el-input>
+  ...
+  <el-form>
+```
+##### 2、其他修饰符(主要用于固定列，并需要使用上下键获取上下行的相同位置元素焦点)
    >* Number类型：值为一行的操作元素个数，用于上下键
    ```js
     v-shortCut:keydown.keyDown="10"
@@ -98,6 +111,11 @@ import {ShortCut} from 'ele-plus'
    >* Object：
    
   ```js
+  //form中也可使用
+  <el-form v-shortCut:keydown.enter>...<el-form>
+  //可编辑表格中使用
+  <el-table  v-shortCut:keydown.keyDown="shortCutObj">....</el-table>
+  //定义变量
   data(){
     return {
       shortCutObj: {
@@ -110,8 +128,13 @@ import {ShortCut} from 'ele-plus'
       },
     }
   }
-    ```
+```
   ### 防抖按钮：elp-button
   > 使用与el-button的使用方法一致,只是增加了防抖
-
+  ### 图片组件
+  > 属性：
+  * windowOpenImgSwitch：true('按住ctrl键点击：打开新窗口'),false('')
+   > 通过依赖注入传递给子组件
   
+  
+    

@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <Images/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-
+import Images from './components/images.vue'
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    Images
   }
 }
 </script>

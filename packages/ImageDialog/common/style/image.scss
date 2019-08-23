@@ -1,0 +1,153 @@
+@mixin imageOperater {
+  .operator-float{
+    z-index: 200000000;
+    position: fixed;
+    display: flex;
+    top: 25%;
+    right: 20px;
+    height: 450px;
+    width: 120px;
+    align-items: center;
+    flex-direction: column;
+    .dialog-close{
+      cursor: pointer;
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: rgba(0,0,0,0.4);
+      text-shadow: 0 0 2px #fff, 0 0 1px #fff;
+    }
+ .operator-pages{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: rgba(0,0,0,0.4);
+    align-items: center;
+    border-radius: 5px;
+    width: 55px;
+    box-shadow: 0 0 2px inset #fffcfc, 0 0 2px inset #ffffff;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 0;
+    line-height: 20px;
+    margin: 10px 0;
+    letter-spacing: 3px;
+    text-indent: 4px;
+ }
+.operator{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 30px;
+    padding: 10px 20px;
+    align-items: center;
+    /* bottom: 0; */
+
+    border-radius: 5px;
+    width: 50px;
+    height: 350px;
+    color: #eee;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 2px inset #fffcfc, 0 0 2px inset #ffffff;
+    .svg-icon{
+        cursor: pointer;
+    }
+  }
+ }
+}
+
+
+@mixin  img {
+  img{
+    transition: all 0.5s;
+    border: 10px solid #efefef;
+    box-shadow: 0 0 5px #808080, 0 0 5px #c1c1c1, 0 0 5px inset #ffffff;
+    border-radius: 5px;
+    height: 800px;
+  }
+}
+
+@mixin simpleImgDivDialogOfShadow{
+     z-index: 200000;
+     position: fixed;
+     margin: 0 auto;
+     top: 50%;
+     left: 50%;
+     transform: translateY(-50%) translateX(-50%);
+     border: 10px solid rgba(0,0,0,0.05);
+     box-shadow: 0 0 5px #383737;
+     background: #ffffff;
+     border-radius: 5px;
+}
+@mixin simpleImgDivDialogOfNoShadow{
+  z-index: 200000;
+  top: 0;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+  border: 10px solid rgba(0,0,0,0.05);
+  box-shadow: 0 0 5px #383737;
+  background: #ffffff;
+  border-radius: 5px;
+}
+
+@mixin simpleSwitchImg {
+  .dialog-close{
+    position: absolute;
+    right: -34px;
+    top: -28px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    text-shadow: 0 0 2px #808080, 0 0 2px #656565;
+    
+  }
+  .operator{
+      z-index: 200010;
+      display: flex;
+      position: absolute;
+      justify-content: space-evenly;
+      font-size: 30px;
+      padding: 10px 20px;
+      align-items: center;
+      /* bottom: 0; */
+      // bottom: 20px;
+      border-radius: 5px;
+      width: 250px;
+      margin: 0 auto;
+      color: #eee;
+      background: rgba(0, 0, 0, 0.4);
+      .el-icon-zoom-in,.el-icon-zoom-out,.svg-icon{
+          cursor: pointer;
+      }
+  }
+  .img-before{
+    width: 50px;
+    height: 70px;
+    background: rgba(0,0,0,0.4);
+    /* border: 1px solid #cccccc; */
+    position: absolute;
+    z-index: 1;
+    font-size: 30px;
+    line-height: 72px;
+    padding: 0 14px;
+    color: #fff;
+    top: 40%;
+    left: 0;
+    cursor: pointer;
+  }
+  .img-after{
+    width: 50px;
+    height: 70px;
+    background: rgba(0,0,0,0.4);
+    /* border: 1px solid #cccccc; */
+    position: absolute;
+    z-index: 1;
+    font-size: 30px;
+    line-height: 72px;
+    padding: 0 14px;
+    color: #fff;
+    top: 40%;
+    right: 0;
+    cursor: pointer;
+  }
+}
