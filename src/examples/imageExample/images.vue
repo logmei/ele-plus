@@ -1,24 +1,40 @@
 <template>
-<div>
-  <p>dialogType:'self' 默认值，带有遮罩层的图片切换</p>
-  <images-component :image-list="imgFiles"/>
-  <p>:shadow="false" 无遮罩层的图片切换(默认值为true)</p>
-  <images-component :image-list="imgFiles" :shadow="false"/>
-  <p>dialogType:'images' 带有工具栏（放大缩小旋转）</p>
-  <images-component :image-list="imgFiles" dialogType='images'/>
-  <p>dialogType:'images' 带有工具栏（放大缩小旋转）不带遮罩</p>
-  <images-component :image-list="imgFiles" dialogType='images'  :shadow="false"/>
-</div>
-  
+  <div>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="默认" name="first">
+        <p>dialogType:'self' 默认值，带有遮罩层的图片切换</p>
+        <elp-image-list :visible.sync="tabs[0].visible" :image-list="imgFiles"/>
+      </el-tab-pane>
+      <el-tab-pane label="图片切换无遮罩层" name="second">
+        <p>:shadow="false" 无遮罩层的图片切换(默认值为true)</p>
+        <elp-image-list :visible.sync="tabs[1].visible" :image-list="imgFiles" :shadow="false"/>
+      </el-tab-pane>
+      <el-tab-pane label="带有工具栏" name="third">
+        <p>dialogType:'images' 带有工具栏（放大缩小旋转）</p>
+        <elp-image-list :visible.sync="tabs[2].visible" :image-list="imgFiles" dialogType='images'/>
+      </el-tab-pane>
+      <el-tab-pane label="带有工具栏，不带遮罩" name="fourth">
+        <p>dialogType:'images' 带有工具栏（放大缩小旋转）不带遮罩</p>
+        <elp-image-list :visible.sync="tabs[3].visible" :image-list="imgFiles" dialogType='images'  :shadow="false"/>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 <script>
-import ImagesComponent from '../../packages/ImageList'
+// import {ElpImageList} from '../../packages'
 export default {
-  components:{
-    ImagesComponent
-  },
+  // components:{
+  //   ElpImageList
+  // },
   data(){
     return {
+      activeName: 'first',
+      tabs:[
+        {name:'first',visible:false},
+        {name:'second',visible:false},
+        {name:'third',visible:false},
+        {name:'fourth',visible:false}
+      ],
       imgFiles:[
         {
           title:'title-01',
@@ -35,6 +51,11 @@ export default {
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566558427557&di=8486823d19d99ae586d582985de6fb65&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201305%2F25%2F20130525153450_nHVaH.thumb.700_0.jpeg'
             ]}
       ]
+    }
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
     }
   }
 }

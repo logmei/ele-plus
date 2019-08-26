@@ -7,7 +7,7 @@
         :key="index"
         :src="item"
         :title="windowOpenImgSwitch ? '按住ctrl键点击：打开新窗口':''"
-        :style="imgStyle"
+        :style="imgsStyle"
         @click.exact="showImgLarge(index)"
         @click.ctrl.exact="windowOpenImg(index)"
       >
@@ -25,14 +25,9 @@ export default {
     list: {
       type: Array,
       required: true
-    },
-    imgStyle: {
-      type: String,
-      required: false,
-      default: 'width:250px;height:170px'
     }
   },
-  inject: ['windowOpenImgSwitch'],
+  inject: ['windowOpenImgSwitch','imgsStyle'],
   data() {
     return {
       src: '',

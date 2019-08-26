@@ -1,9 +1,9 @@
 <template>
-  <div v-show="dialogVisible" :class="shadowType?'shadow':'noShadow'">
-    <div ref="usernameInput" v-dragImage class="img-div-dialog img-dialogs">
+  <div v-show="dialogVisible" v-dragImage="shadowType?true:false" :class="shadowType?'shadow':'noShadow'">
+    <div ref="usernameInput"  class="img-div-dialog img-dialogs">
 
       <div class="show-img-class" :title="title" :style="styleObject">
-        <img :src="src===''?imageUrl:src">
+        <img :src="src===''?imageUrl:src" :style="ImageStyle">
       </div>
       <operatorComponent
         :visible.sync="dialogVisible"
@@ -26,6 +26,7 @@ import dragImage from '../../directives/drag-images/index.js'
 import operatorComponent from './components/Operater'
 import dialog from '../common/mixins/dialog.js'
 export default {
+  name:'ElpImagesDialog',
   directives: {
     dragImage
   },
@@ -35,10 +36,6 @@ export default {
   mixins: [imageMixin, dialog],
   props: {
     imageUrl: {
-      type: String,
-      required: true
-    },
-    guid: {
       type: String,
       required: true
     },
@@ -56,6 +53,13 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    ImageStyle: {
+      type: Object,
+      required: false,
+      default: ()=>({
+        height: '800px'
+      })
     }
   },
   data() {

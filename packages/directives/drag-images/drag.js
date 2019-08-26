@@ -1,5 +1,7 @@
 function appendDrag(el, binding, vnode) {
+  
   const dragDom = el.querySelector('.show-img-class')
+  const moveDom = el.querySelector('.img-div-dialog')
   // console.log('dragDom..............')
   dragDom.style.cssText += ';cursor:move;'
   // dragDom.style.cssText += ';top:0px;'
@@ -14,6 +16,7 @@ function appendDrag(el, binding, vnode) {
 
   dragDom.onmousedown = (e) => {
     e.preventDefault()
+    // moveDom.style.cssText += '; position: fixed;'
     // console.log('drag..............')
     const startX = e.clientX
     const startY = e.clientY
@@ -21,20 +24,33 @@ function appendDrag(el, binding, vnode) {
     let styL = getStyle(el, 'left')
     let styT = getStyle(el, 'top')
 
+    let styLm = getStyle(moveDom, 'left')
+    let styTm = getStyle(moveDom, 'top')
+
     if (styL.includes('%')) {
       styL = +document.body.clientWidth * (+styL.replace(/\%/g, '') / 100)
       styT = +document.body.clientHeight * (+styT.replace(/\%/g, '') / 100)
+      styLm = +document.body.clientWidth * (+styL.replace(/\%/g, '') / 100)
+      styTm = +document.body.clientHeight * (+styT.replace(/\%/g, '') / 100)
     } else {
       styL = +styL.replace(/\px/g, '')
       styT = +styT.replace(/\px/g, '')
+      styLm = +styLm.replace(/\px/g, '')
+      styTm = +styTm.replace(/\px/g, '')
     }
 
     document.onmousemove = (e) => {
       const left = e.clientX - startX
       const top = e.clientY - startY
       // 移动当前元素
-      el.style.cssText += `;left:${left + styL}px;top:${top + styT}px`
-      // vnode.child.$emit('dragDialog')
+      if(binding.value) {
+        // moveDom.style.cssText += '; position: fixed;'
+        moveDom.style.cssText += `;left:${left + styLm}px;top:${top + styTm}px`
+      } else {
+        el.style.cssText += `;left:${left + styL}px;top:${top + styT}px`
+        // vnode.child.$emit('dragDialog')
+      }
+     
     }
 
     document.onmouseup = function(e) {

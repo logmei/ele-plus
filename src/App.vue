@@ -1,17 +1,15 @@
 <template>
   <div id="app">
-    <Images/>
+    <exmaples-component/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import Images from './components/images.vue'
+import ExmaplesComponent from './examples'
 export default {
   name: 'app',
   components: {
-    HelloWorld,
-    Images
+    ExmaplesComponent
   }
 }
 </script>

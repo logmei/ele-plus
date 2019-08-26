@@ -1,6 +1,13 @@
 <template>
   <div>
-    <images-component v-for="(item,index) in imageList" :key="index" :title="item.title" :list="item.list" @showImgLarge="showImgLarge" @windowOpenImg="windowOpenImg" />
+    <images-component 
+    v-for="(item,index) in imageList" 
+    :key="index" 
+    :title="item.title" 
+    :list="item.list" 
+    @showImgLarge="showImgLarge" 
+    @windowOpenImg="windowOpenImg"
+     />
     <image-of-self-dialog
       v-if="dialogType === 'self'"
       :visible.sync="dialogVisible"
@@ -26,6 +33,7 @@ import ImagesDialog from '../ImageDialog/ImagesDialog'
 import ImageOfSelfDialog from '../ImageDialog/ImageOfSelfDialog'
 import common from './common/mixins/common.js'
 export default {
+  name:'ElpImageList',
   components: {
     ImagesComponent,
     ImagesDialog,
@@ -34,7 +42,9 @@ export default {
   mixins: [common],
   provide: function() {
     return {
-      windowOpenImgSwitch: this.windowOpenImgSwitch
+      windowOpenImgSwitch: this.windowOpenImgSwitch,
+      imgsStyle: this.imgsStyle,
+      ImageStyle: this.ImageStyle
     }
   },
   props: {
@@ -43,9 +53,9 @@ export default {
       required: false,
       default: ''
     },
-    visible: {
+    visible: {//若存在父级弹出框，提供关闭子窗口
       type: Boolean,
-      required: false,
+      required: true,
       default: false
     },
     dialogType: {
@@ -57,6 +67,22 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    imgsStyle: {
+      type: Object,
+      required: false,
+      default: ()=>({
+        width:'250px',
+        height:'170px'
+      })
+    },
+    ImageStyle: {
+       type: Object,
+      required: false,
+      default: ()=>({
+        height:'800px'
+        // width:'800px'
+      })
     }
   },
   data() {

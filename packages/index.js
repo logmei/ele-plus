@@ -1,17 +1,29 @@
 import ElpDialog from './CommonDialog/index.js'
 import ElpSearch from './Search/index.js'
-import ShortCut from './directives/short-cut/index.js'
 import ElpSvgIcon from './SvgIcon/index.js'
 import ElpButton from './Button/index.js'
+import ShortCut from './directives/short-cut/index.js'
+import DragImage from './directives/drag-images/index.js'
+import ElpImageDialog from './ImageDialog/index.js'
+import ElpImageList from './ImageList/index.js'
+import ElpImageOfSelfDialog from './ImageDialog/ImageOfSelfDialog/index.js'
+import ElpImagePage from './ImageDialog/ImagePage/index.js'
+import ElpImagesDialog from './ImageDialog/ImagesDialog/index.js'
 
 const components = {
   ElpDialog,
   ElpSearch,
   ElpSvgIcon,
-  ElpButton
+  ElpButton,
+  ElpImageDialog,
+  ElpImageList,
+  ElpImageOfSelfDialog,
+  ElpImagePage,
+  ElpImagesDialog
 }
 const directives = {
-  ShortCut
+  ShortCut,
+  DragImage
 }
 
 const install = function(Vue){
@@ -36,5 +48,12 @@ export {
   ElpSearch,
   ElpSvgIcon,
   ElpButton,
-  ShortCut
+  ElpImageDialog,
+  ElpImageList,
+  ElpImageOfSelfDialog,
+  ElpImagePage,
+  ElpImagesDialog,
+  ShortCut,
+  DragImage
+  
 }

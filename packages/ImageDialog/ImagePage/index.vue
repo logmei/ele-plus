@@ -32,6 +32,15 @@ import imageMixin from '../common/mixins/image.js'
 export default {
   name: 'BigImage',
   mixins: [imageMixin],
+  props:{
+    ImageStyle: {
+      type: Object,
+      required: false,
+      default: ()=>({
+        height: '800px'
+      })
+    }
+  },
   data() {
     return {
       src: '',

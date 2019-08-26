@@ -1,6 +1,7 @@
 import appendDrag from './drag.js'
 
 const dragImageDialog = {
+  name: 'dragImage',
   componentUpdated: function(el, binding, vnode) {
     appendDrag(el, binding, vnode)
   }
