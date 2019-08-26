@@ -16,7 +16,11 @@
   </div>
 </template>
 <script>
+import ElpSvgIcon from '../../../../SvgIcon'
 export default {
+  components:{
+    ElpSvgIcon
+  },
   props: {
     visible: {
       type: Boolean,

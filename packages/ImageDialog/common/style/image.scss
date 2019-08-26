@@ -129,8 +129,9 @@
     position: absolute;
     z-index: 1;
     font-size: 28px;
-    display: inline-table;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #fff;
     top: 45%;
     left: 0;
@@ -146,8 +147,9 @@
     position: absolute;
     z-index: 1;
     font-size: 28px;
-    display: inline-table;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #fff;
     top: 45%;
     right: 0;

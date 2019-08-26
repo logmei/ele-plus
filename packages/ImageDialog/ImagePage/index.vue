@@ -39,6 +39,11 @@ export default {
       default: ()=>({
         height: '800px'
       })
+    },
+    imageListInterface: {
+      type: Function,
+      required: true,
+      default:()=>{}
     }
   },
   data() {
@@ -56,18 +61,18 @@ export default {
   },
   methods: {
     init() {
-      // imageListInterface(this.guid).then(response => {
-      //   console.log('images...', this.images)
-      //   this.list = response.result
-      //   this.list.forEach((image, index) => {
-      //     const imgSrc = this.src === '' ? this.imageUrl : this.src
-      //     if (image === imgSrc) {
-      //       this.page = index
-      //       return
-      //     }
-      //   })
-      //   // console.log('images...', this.images)
-      // })
+      imageListInterface().then(response => {
+        console.log('images...', this.images)
+        this.list = response.result
+        this.list.forEach((image, index) => {
+          const imgSrc = this.src === '' ? this.imageUrl : this.src
+          if (image === imgSrc) {
+            this.page = index
+            return
+          }
+        })
+        // console.log('images...', this.images)
+      })
     }
 
   }

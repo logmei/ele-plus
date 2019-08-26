@@ -36,7 +36,7 @@ export default {
       this.dialogVisible = false
     },
     init() {
-      console.log('image list ', this.list)
+      //console.log('image list ', this.list)
       this.list.forEach((item, index) => {
         const image = typeof item === 'object' ? item.value : item
         const imgSrc = this.src === '' ? this.imageUrl : this.src

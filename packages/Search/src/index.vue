@@ -12,8 +12,12 @@
 </template>
 <script>
 import { debounce } from '../../utils/index.js'
+import ElpSvgIcon from '../../SvgIcon'
 export default {
   name:'ElpSearch',
+  components:{
+    ElpSvgIcon
+  },
   props: {
     value: {
       type: String,

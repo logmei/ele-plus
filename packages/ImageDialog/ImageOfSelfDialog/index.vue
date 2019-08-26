@@ -2,11 +2,11 @@
   <div v-show="dialogVisible" v-dragImage="shadowType?true:false" :class="shadowType?'shadow':'noShadow'">
     <div ref="usernameInput"  class="img-div-dialog">
       <div class="dialog-close" @click="dialogVisible=false" ><elp-svg-icon icon-class="close"  /></div>
-      <div v-show="page>0" class="img-before" @click="showImgLarge(page-1)">&lt;</div>
+      <div v-show="page>0" class="img-before" @click="showImgLarge(page-1)"><span>&lt;</span></div>
       <div class="show-img-class" >
-        <img :src="src===''?imageUrl:src" :style="ImageStyle">
+        <img :src="src===''?imageUrl:src" :style="imageStyle">
       </div>
-      <div v-show="page<list.length-1" class="img-after" @click="showImgLarge(page+1)">&gt;</div>
+      <div v-show="page<list.length-1" class="img-after" @click="showImgLarge(page+1)"><span>&gt;</span></div>
 
     </div>
   </div>
@@ -17,10 +17,14 @@ import dragImage from '../../directives/drag-images' // base on element-ui
 import imageList from '../../ImageList/common/mixins/imageList.js'
 import dialog from '../common/mixins/dialog.js'
 import commonjs from '../../ImageList/common/mixins/common.js'
+import ElpSvgIcon from '../../SvgIcon'
 export default {
   name:'ElpImageOfSelfDialog',
   directives: { dragImage },
   mixins: [commonjs, imageList, dialog],
+  components:{
+    ElpSvgIcon
+  },
   props: {
     imageUrl: {
       type: String,
@@ -31,7 +35,7 @@ export default {
       required: false,
       default: true
     },
-    ImageStyle: {
+    imageStyle: {
       type: Object,
       required: false,
       default: ()=>({
