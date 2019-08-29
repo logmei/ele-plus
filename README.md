@@ -344,7 +344,35 @@ export default {
 在线运行:https://codepen.io/logmei/pen/YzKZaRm
 
   ### 鼠标滚轮指令
-  
+  * 1、引入指令
+  ```
+  import {MouseScroll} from 'ele-plus'
+  ```
+
+  * 2、局部注册
+  ```
+  directives: {
+      MouseScroll
+    }
+  ```
+  * 3、全局注册
+  ```
+  Vue.use(MouseScroll)
+  ``` 
+  * 4、指令```v-mouseScroll```
+  > 绑定事件：downWheel（向下滚动），upWheel（向上滚动）
+  > 示例:
+  ```
+  <div 
+    v-mouseScroll 
+    @downWheel="downWheel" 
+    @upWheel="upWheel"  
+    >
+    内容
+    </div>
+
+  ```
+
 
   
   
