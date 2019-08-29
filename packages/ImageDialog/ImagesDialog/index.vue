@@ -1,8 +1,16 @@
 <template>
-  <div v-show="dialogVisible" v-dragImage="shadowType?true:false" v-mouseScroll @downWheel="enlarge" @upWheel="narrow" :class="shadowType?'shadow':'noShadow'">
-    <div ref="usernameInput"  class="img-div-dialog img-dialogs" >
+  <div 
+  v-show="dialogVisible" 
+  v-dragImage="shadowType?true:false" 
+  v-mouseScroll 
+  @downWheel="enlarge" 
+  @upWheel="narrow" 
+  :class="shadowType?'shadow':'noShadow'"
+  :style="shadowType?{}:styleObjectOfNoShadow"
+  >
+    <div ref="usernameInput"  class="img-div-dialog img-dialogs" :style="shadowType?styleObjectOfShadow:{}">
 
-      <div class="show-img-class" :title="title" :style="styleObject">
+      <div class="show-img-class" :title="title" >
         <img :src="src===''?imageUrl:src" :style="ImageStyle">
       </div>
       <operatorComponent
@@ -66,10 +74,7 @@ export default {
   },
   data() {
     return {
-      src: '',
-      styleObject: {
-        transform: `scale(1) rotate(0deg)`
-      }
+      src: ''
     }
   }
 

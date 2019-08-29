@@ -2,7 +2,7 @@ import scrollFun from './common/scroll.js'
 
 const mouseScroll = {
   name:'mouseScroll',
-  update:function(el, binding, vnode){
+  inserted:function(el, binding, vnode){
     el.onmouseover = (e) =>{
       scrollFun.mouseScroll(el, binding, vnode)
     }

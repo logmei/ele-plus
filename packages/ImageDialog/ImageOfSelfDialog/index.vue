@@ -1,6 +1,14 @@
 <template>
-  <div v-show="dialogVisible" v-dragImage="shadowType?true:false" :class="shadowType?'shadow':'noShadow'">
-    <div ref="usernameInput"  class="img-div-dialog">
+  <div 
+  v-show="dialogVisible" 
+  v-dragImage="shadowType?true:false" 
+  v-mouseScroll 
+  @downWheel="enlarge" 
+  @upWheel="narrow"  
+  :class="shadowType?'shadow':'noShadow'" 
+  :style="shadowType?{}:styleObjectOfNoShadow"
+  >
+    <div ref="usernameInput"  class="img-div-dialog" :style="shadowType?styleObjectOfShadow:{}">
       <div class="dialog-close" @click="dialogVisible=false" ><elp-svg-icon icon-class="close"  /></div>
       <div v-show="page>0" class="img-before" @click="showImgLarge(page-1)"><span>&lt;</span></div>
       <div class="show-img-class" >
@@ -16,12 +24,12 @@
 import dragImage from '../../directives/drag-images' // base on element-ui
 import imageList from '../../ImageList/common/mixins/imageList.js'
 import dialog from '../common/mixins/dialog.js'
-import commonjs from '../../ImageList/common/mixins/common.js'
+import imageMixin from '../common/mixins/image.js'
 import ElpSvgIcon from '../../SvgIcon'
 export default {
   name:'ElpImageOfSelfDialog',
   directives: { dragImage },
-  mixins: [commonjs, imageList, dialog],
+  mixins: [imageMixin, dialog],
   components:{
     ElpSvgIcon
   },

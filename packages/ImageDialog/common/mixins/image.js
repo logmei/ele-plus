@@ -8,7 +8,8 @@ export default {
       scaleStep: 0.1,
       rotate: 0,
       rotateStep: 90,
-      styleObject: null,
+      styleObjectOfNoShadow: null,
+      styleObjectOfShadow: null,
       styleShowObj: null
     }
   },
@@ -30,7 +31,8 @@ export default {
       this.changeStyleObject()
     },
     changeStyleObject() {
-      this.styleObject = { transform: `scale(${this.scale}) rotate(${this.rotate}deg)` }
+      this.styleObjectOfNoShadow = { transform: `translateY(-50%) translateX(-50%) scale(${this.scale}) rotate(${this.rotate}deg)` }
+      this.styleObjectOfShadow = { transform: `translateY(-50%) translateX(-50%) scale(${this.scale}) rotate(${this.rotate}deg)` }
     }
 
   }
