@@ -22,13 +22,14 @@
 </template>
 <script>
 import dragImage from '../../directives/drag-images' // base on element-ui
+import mouseScroll from '../../directives/mouse-scroll'
 import imageList from '../../ImageList/common/mixins/imageList.js'
 import dialog from '../common/mixins/dialog.js'
 import imageMixin from '../common/mixins/image.js'
 import ElpSvgIcon from '../../SvgIcon'
 export default {
   name:'ElpImageOfSelfDialog',
-  directives: { dragImage },
+  directives: { dragImage, mouseScroll },
   mixins: [imageMixin, dialog],
   components:{
     ElpSvgIcon

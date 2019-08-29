@@ -31,14 +31,14 @@
 <script>
 import imageMixin from '../common/mixins/image.js'
 import dragImage from '../../directives/drag-images/index.js'
-// import mouseScroll from '../../directives/mouse-scroll/index.js'
+import mouseScroll from '../../directives/mouse-scroll/index.js'
 import operatorComponent from './components/Operater'
 import dialog from '../common/mixins/dialog.js'
 export default {
   name:'ElpImagesDialog',
   directives: {
-    dragImage
-    // mouseScroll
+    dragImage,
+    mouseScroll
   },
   components: {
     operatorComponent
