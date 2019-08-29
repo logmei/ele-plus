@@ -9,7 +9,7 @@
   :style="shadowType?{}:styleObjectOfNoShadow"
   >
     <div ref="usernameInput"  class="img-div-dialog" :style="shadowType?styleObjectOfShadow:{}">
-      <div class="dialog-close" @click="dialogVisible=false" ><elp-svg-icon icon-class="close"  /></div>
+      <div class="dialog-close" @click="closeDialog" ><elp-svg-icon icon-class="close"  /></div>
       <div v-show="page>0" class="img-before" @click="showImgLarge(page-1)"><span>&lt;</span></div>
       <div class="show-img-class" >
         <img :src="src===''?imageUrl:src" :style="imageStyle">

@@ -32,10 +32,15 @@ export default {
   },
   methods: {
     closeDialog() {
+      console.log('closeDialog...........')
       this.src = ''
       this.dialogVisible = false
+      this.styleObjectOfNoShadow = { transform: `translateY(-50%) translateX(-50%)` }
+      this.styleObjectOfShadow = { transform: `translateY(-50%) translateX(-50%)` }
     },
     init() {
+      this.styleObjectOfNoShadow = { transform: `translateY(-50%) translateX(-50%)` }
+      this.styleObjectOfShadow = { transform: `translateY(-50%) translateX(-50%)` }
       //console.log('image list ', this.list)
       this.list.forEach((item, index) => {
         const image = typeof item === 'object' ? item.value : item

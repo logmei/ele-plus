@@ -19,7 +19,7 @@ export default {
       this.changeStyleObject()
     },
     narrow() { // 缩小
-      if (this.scale > 0) this.scale -= this.scaleStep
+      if (this.scale > 0.3) this.scale -= this.scaleStep
       this.changeStyleObject()
     },
     turnLeft() { // 向左旋转
