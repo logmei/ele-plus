@@ -340,6 +340,11 @@ export default {
 </script>     
   ```
 ![](https://user-gold-cdn.xitu.io/2019/8/26/16cccfdb46a03f18?w=1905&h=750&f=png&s=532298)
+* #### 支持mouseover时滚轮滚动时图片放大缩小，mouseout时取消事件
+在线运行:https://codepen.io/logmei/pen/YzKZaRm
+
+  ### 鼠标滚轮指令
+  
 
   
   
