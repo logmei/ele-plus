@@ -9,6 +9,7 @@ import ElpImageList from './ImageList/index.js'
 import ElpImageOfSelfDialog from './ImageDialog/ImageOfSelfDialog/index.js'
 import ElpImagePage from './ImageDialog/ImagePage/index.js'
 import ElpImagesDialog from './ImageDialog/ImagesDialog/index.js'
+import MouseScroll from './directives/mouse-scroll/index.js'
 
 const components = {
   ElpDialog,
@@ -23,7 +24,8 @@ const components = {
 }
 const directives = {
   ShortCut,
-  DragImage
+  DragImage,
+  MouseScroll
 }
 
 const install = function(Vue){
@@ -54,6 +56,7 @@ export {
   ElpImagePage,
   ElpImagesDialog,
   ShortCut,
-  DragImage
+  DragImage,
+  MouseScroll
   
 }

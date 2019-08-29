@@ -2,7 +2,7 @@ function appendDrag(el, binding, vnode) {
   
   const dragDom = el.querySelector('.show-img-class')
   const moveDom = el.querySelector('.img-div-dialog')
-  // console.log('dragDom..............')
+  console.log('dragDom..............')
   dragDom.style.cssText += ';cursor:move;'
   // dragDom.style.cssText += ';top:0px;'
   // 获取原有属性 ie dom元素.currentStyle 火狐谷歌 window.getComputedStyle(dom元素, null);
@@ -57,6 +57,8 @@ function appendDrag(el, binding, vnode) {
       document.onmousemove = null
       document.onmouseup = null
     }
-  }
+
+ }
 }
+
 export default appendDrag

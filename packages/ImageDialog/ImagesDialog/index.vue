@@ -1,6 +1,6 @@
 <template>
-  <div v-show="dialogVisible" v-dragImage="shadowType?true:false" :class="shadowType?'shadow':'noShadow'">
-    <div ref="usernameInput"  class="img-div-dialog img-dialogs">
+  <div v-show="dialogVisible" v-dragImage="shadowType?true:false" v-mouseScroll @downWheel="enlarge" @upWheel="narrow" :class="shadowType?'shadow':'noShadow'">
+    <div ref="usernameInput"  class="img-div-dialog img-dialogs" >
 
       <div class="show-img-class" :title="title" :style="styleObject">
         <img :src="src===''?imageUrl:src" :style="ImageStyle">
@@ -23,12 +23,14 @@
 <script>
 import imageMixin from '../common/mixins/image.js'
 import dragImage from '../../directives/drag-images/index.js'
+// import mouseScroll from '../../directives/mouse-scroll/index.js'
 import operatorComponent from './components/Operater'
 import dialog from '../common/mixins/dialog.js'
 export default {
   name:'ElpImagesDialog',
   directives: {
     dragImage
+    // mouseScroll
   },
   components: {
     operatorComponent
