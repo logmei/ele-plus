@@ -65,7 +65,26 @@
     height: 800px;
   }
 }
-
+@mixin ImgDivDialog{
+  z-index: 200000;
+  position: fixed;
+  margin: 0 auto;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  .header {
+    height: 50px;
+    background: #c1c1c1;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    .dialog-close{
+      float: right;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}
 @mixin simpleImgDivDialogOfShadow{
      z-index: 200000;
      position: absolute;
@@ -88,6 +107,50 @@
   box-shadow: 0 0 5px #383737;
   background: #ffffff;
   border-radius: 5px;
+}
+
+@mixin SwitchBeforeAfter {
+  .img-before{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.4);
+    /* border: 1px solid #cccccc; */
+    position: absolute;
+    z-index: 1;
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    top: 45%;
+    left: 0;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.5s;
+  }
+  .img-after{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    z-index: 1;
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    top: 45%;
+    right: 0;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.5s;
+  }
+  .img-after:hover,.img-before:hover{
+    opacity:1;
+    transition: opacity 0.5s;
+  }
 }
 
 @mixin simpleSwitchImg {
@@ -161,4 +224,5 @@
     opacity:1;
     transition: opacity 0.5s;
   }
+  
 }

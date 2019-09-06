@@ -1,7 +1,7 @@
 import appendDrag from './drag.js'
 
 const dragImageDialog = {
-  name: 'dragImage',
+  name: 'wechatDragImage',
   componentUpdated: function(el, binding, vnode) {
     appendDrag(el, binding, vnode)
   }

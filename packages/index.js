@@ -10,6 +10,12 @@ import ElpImageOfSelfDialog from './ImageDialog/ImageOfSelfDialog/index.js'
 import ElpImagePage from './ImageDialog/ImagePage/index.js'
 import ElpImagesDialog from './ImageDialog/ImagesDialog/index.js'
 import MouseScroll from './directives/mouse-scroll/index.js'
+import ElpCarousel from './SimpleCarousel/index.js'
+import ElpControllerTable from './ElpTable/ControllerTable/index.js'
+import ElpFilterOperator from './ElpTable/FilterOperator/index.js'
+import ElpPagination from './ElpTable/Pagination/index.js'
+import ElpTable from './ElpTable/index.js'
+
 
 const components = {
   ElpDialog,
@@ -20,7 +26,12 @@ const components = {
   ElpImageList,
   ElpImageOfSelfDialog,
   ElpImagePage,
-  ElpImagesDialog
+  ElpImagesDialog,
+  ElpCarousel,
+  ElpControllerTable,
+  ElpFilterOperator,
+  ElpPagination,
+  ElpTable
 }
 const directives = {
   ShortCut,
@@ -57,6 +68,10 @@ export {
   ElpImagesDialog,
   ShortCut,
   DragImage,
-  MouseScroll
-  
+  MouseScroll,
+  ElpCarousel,
+  ElpControllerTable,
+  ElpFilterOperator,
+  ElpPagination,
+  ElpTable
 }

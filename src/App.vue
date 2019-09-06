@@ -5,7 +5,9 @@
 </template>
 
 <script>
-import ExmaplesComponent from './examples/imageExample/images'
+// import ExmaplesComponent from './examples/imageExample/images'
+import ExmaplesComponent from './examples/table'
+// import ExmaplesComponent from './examples/carousel'
 export default {
   name: 'app',
   components: {

@@ -69,6 +69,7 @@ function conChooseAction(chooseByKeyEntity) {
 function typeOf(type) {
   // const typeList = ['object','array','string','function','boolean','number','undefined','null']
   return function(val) {
+    debugger
     let typeOfVal = Object.prototype.toString.call(val)
     typeOfVal = typeOfVal.substring(8, typeOfVal.length - 1)
     return typeOfVal.toLowerCase() === type.toLowerCase()
