@@ -1,8 +1,7 @@
 import { parseTimeMilliSecond } from '../../../packages/utils/index.js'
-import ConstantsParam from '../../../packages/utils/constantParams'
+import { ConstantParams } from '../../../packages/index.js'
 // 合同列表列
 const contractColumns = [
-  { label: '合同编号', name: 'number', fixed: 'left' },
   { label: '合同名称', name: 'title', fixed: 'left', minWidth: 155 },
   { label: '客户名称', name: 'name', fixed: 'left' },
   { label: '机构ID', name: 'mechNo' },
@@ -22,17 +21,17 @@ const contractColumns = [
   { label: '驳回原因', name: 'rejectReason' },
   {
     authority: true,
-    valueType: ConstantsParam.TABLECOLUMNSTYPE.BUTTON.key,
-    label: ConstantsParam.TABLECOLUMNSTYPE.BUTTON.label,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.BUTTON.label,
     name: '',
     value: [{
       label: '查看',
-      entity: ConstantsParam.TABLECOLUMNSTYPE.BUTTON,
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
       callBackFunName: 'handleClick'
     }
     ],
     fixed: 'right',
-    width: 50
+    width: 100
   }
 ]
 // 年月日时分

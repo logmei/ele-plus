@@ -1,6 +1,6 @@
 {
   "name": "ele-plus",
-  "version": "0.2.8",
+  "version": "0.3.4",
   "private": false,
   "main": "lib/ele-plus.umd.min.js",
   "keyword": "vue directive short cut focus dialog debunce",

@@ -1,4 +1,5 @@
-export default {
+const constantParams = {
+    name:'ConstantsParam',
     TABLECOLUMNSTYPE : {
       IMAGE: {
         key: 'img',
@@ -24,10 +25,21 @@ export default {
         key: 'select',
         description: '选择框'
       },
+      DATEPICKERRANGE: {
+        key: 'datepickerrange',
+        description: '日期范围',
+        format: 'yyyy-MM-dd'
+      },
       DATEPICKER: {
         key: 'datepicker',
         description: '日期范围',
         format: 'yyyy-MM-dd'
+      },
+      HIDDEN: {
+        key: 'hidden',
+        description: '隐藏输入框'
       }
     }
 }
+
+export default constantParams

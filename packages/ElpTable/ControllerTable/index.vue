@@ -1,8 +1,25 @@
 <template>
   <div>
     <filter-operator :items="searchParams" @query="query"></filter-operator>
-    <table-component :loading="listLoading" :table-data="tableData" :clear-select-status="clearSelectStatus" :table-columns="tableColumns" :authority="false" @handleSelectionChange="handleSelectionChange" @handleClick="handleClick" />
-    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize" @pagination="getTableDataList" />
+    <table-component 
+    :loading="listLoading" 
+    :table-data="tableData" 
+    :clear-select-status="clearSelectStatus" 
+    :table-columns="tableColumns" 
+    :show-row-number="showRowNumber" 
+    :authority="authority.operator" 
+    :border="border"
+    :fit="fit"
+    @handleSelectionChange="handleSelectionChange" 
+    @handleClick="handleClick" 
+    />
+    <pagination 
+    v-show="total>0" 
+    :total="total" 
+    :page.sync="pageNum" 
+    :limit.sync="pageSize" 
+    @pagination="getTableDataList" 
+    />
     <DialogComponent
       ref="dialog-ref"
       :visible.sync="dialogVisible"
@@ -52,7 +69,10 @@ export default {
      * } */
     authority: {
       type: Object,
-      required: false
+      required: false,
+      default: ()=>{
+        return {operator:false}
+      }
     },
     reload: {
       type: Boolean,
@@ -64,8 +84,23 @@ export default {
       required: true
     },
     tableColumns: {
-      type: Array,
+      type: Array|Function,
       required: true
+    },
+    showRowNumber: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    border: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    fit: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data() {

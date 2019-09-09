@@ -1,28 +1,45 @@
 <template>
-  <el-form :inline="true" class="demo-form-inline">
-    <el-form-item v-for="(item,index) in formItems" :key="index" :label="item.label">
+  <el-form :inline="true" class="elp-operator-form-inline">
+    <div class="elp-operator-params">
+    <el-form-item v-for="(item,index) in items" :key="index" :label="item.label">
       <span v-if="item.type==='INPUT'">
-        <el-input v-model="item.value" :placeholder="item.label"></el-input>
+        <el-input v-model="formItems[index].value" :placeholder="item.placeholder?item.placeholder:item.label"></el-input>
+      </span>
+      <span v-else-if="item.type==='HIDDEN'">
+        <input v-model="formItems[index].value" type="hidden"/>
       </span>
       <span v-if="item.type==='SELECT'">
-        <el-select v-model="item.value" placeholder="item.label">
+        <el-select v-model="formItems[index].value" :placeholder="item.placeholder?item.placeholder:item.label">
         <el-option v-for="(option,i) in item.list" :key="i" :label="option.label" :value="option.key"></el-option>
       </el-select>
       </span>
-      <span v-if="item.type==='DATEPICKER'">
+      <span v-else-if="item.type==='DATEPICKERRANGE'">
         <el-date-picker
-        v-model="item.value"
+        v-model="formItems[index].value"
         type="daterange"
         range-separator="至"
         start-placeholder="开始日期"
-        end-placeholder="结束日期">
-    </el-date-picker>
+        end-placeholder="结束日期"
+        :format="item.format?item.format:'yyyy-MM-dd'"
+        :value-format="item.valueFormat?item.valueFormat:'yyyy-MM-dd'">
+       </el-date-picker>
+      </span>
+      <span v-else-if="item.type==='DATEPICKER'">
+        <el-date-picker
+          v-model="formItems[index].value"
+          type="date"
+          :placeholder="item.placeholder?item.placeholder:item.label"
+          :format="item.format?item.format:'yyyy-MM-dd'"
+          :value-format="item.valueFormat?item.valueFormat:'yyyy-MM-dd'">
+        </el-date-picker>
       </span>
     </el-form-item>
+    </div>
     
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">查询</el-button>
+    
+    <el-form-item class="elp-operator-buttons">
       <el-button @click="onReset">重置</el-button>
+      <el-button type="primary" @click="onSubmit">查询</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -41,13 +58,18 @@
         key: 'datepicker',
         description: '日期范围',
         format: 'yyyy-MM-dd'
+      },
+      HIDDEN: {
+        key: 'hidden',
+        description: '隐藏输入框'
       }
     }
  * items:[Array]
  * 例如：[
  * {name:'name',type:'INPUT',label:'姓名',value:'',default:''},
  * {name:'sex',type:'SELECT',label:'性别',value:'',default:[{key:'0',label:'女'},{key:'1',label:'男'}]},
- * {name:'date',type:'DATEPICKER',label:'选择日期',value:[],default:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'}
+ * {name:'date',type:'DATEPICKER',label:'选择日期',value:[],default:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'},
+ * {name:'guid',type:'HIDDEN',label:'',value:'1'}
  * ]
  */
 import { debounce } from '../../utils/index.js'
@@ -59,28 +81,48 @@ export default {
       required: true
     }
   },
-  computed:{
-    formItems(){
-      return this.items
+  data(){
+    return {
+      formItems:[]
     }
   },
+  created(){
+    this.setFormItemsValues()
+  },
   methods:{
+    setFormItemsValues(){
+      this.items.forEach((v,index)=>{
+        this.$set(this.formItems,index,{name:v.name,value:v.value})
+      })
+    },
     //查询
-    onSubmit:debounce(function(){
-      const search = this.formItems.reduce((search,v,index)=>{
-         search[v.name] = v.value
-         return search
-      },{})
-      this.$emit('query',search)
-    },1000,true),
+    onSubmit(){
+      this.query()
+    },
     //重置
     onReset(){
-      debugger
       this.formItems.map((v,index)=>{
         v.value = this.items[index].value
         return v
       })
-    }
+      this.query()
+    },
+    query:debounce(function(){
+       const search = this.formItems.reduce((search,v,index)=>{
+         search[v.name] = v.value
+         return search
+      },{})
+      this.$emit('query',search)
+    },1000,true)
   }
 }
 </script>
+<style lang="scss" scoped>
+.elp-operator-params{
+  float: left;
+  text-align: left;
+}
+.elp-operator-buttons{
+  float: right;
+}
+</style>

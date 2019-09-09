@@ -460,3 +460,7 @@ export const autoprefixer = function(style) {
   });
   return style;
 };
+
+export function getTypeOf(source,target){
+  return source && Object.prototype.toString.call(source).replace(/\[\w+\s(\w+)\]$/,'$1').toLowerCase() === target.toLowerCase()
+}

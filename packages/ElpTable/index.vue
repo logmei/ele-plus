@@ -5,7 +5,8 @@
       v-loading="loading"
       :data="tableData"
       tooltip-effect="dark"
-      border
+      :border="border"
+      :fit="fit"
       style="width: 100%"
       cell-class-name="columnClass"
       @row-click="handleClick"
@@ -15,6 +16,13 @@
         v-if="authority&&showSelection"
         type="selection"
         width="50"
+      />
+      <el-table-column
+      v-if="showRowNumber"
+      label="序号"
+      type="index"
+      fixed
+      width = "50"
       />
       <el-table-column
         v-for="(item,index) in tableColumns"
@@ -28,7 +36,7 @@
           <span v-if="item.valueType==='img'">
             <img v-for="(button,i) in item.value" :key="i" :style="button.style" :title="button.callBackFunName" :class="button.callBackFunName&&!rowClick?'img-class pointer-class':'img-class'" :src="button.src" @click="clickButton(scope.row,button.callBackFunName)">
           </span>
-          <span v-if="item.valueType==='button'&& !rowClick">
+          <span v-if="item.valueType==='button'&& !rowClick" class="elp-operator-class">
             <el-button v-for="(button,i) in item.value" :key="i" :type="button.entity.type" :plain="button.entity.styleType==='plain'" @click="clickButton(scope.row,button.callBackFunName)">{{ button.label }}</el-button>
           </span>
           <span v-if="!item.valueType || (item.valueType&&item.valueType==='data')">
@@ -50,7 +58,7 @@
             </span>
 
           </span>
-
+          <slot></slot>
         </template>
       </el-table-column>
 
@@ -60,7 +68,89 @@
 </template>
 
 <script>
-
+ 
+/** 模板
+ *authority:权限（默认为true）
+  valueType:列中数据类型（默认data）'@/utils/constantsParam.js'->TABLECOLUMNSTYPE
+  label:列头名
+  name：普通数据对应tableData中的字段
+  formater：回调函数
+  value:操作列
+  import { ConstantParams } from 'ele-plus'
+ * const contractColumns = [
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.IMAGE.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.IMAGE.label,
+    name: '',
+    value: [{
+      src: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3300305952,1328708913&fm=27&gp=0.jpg',
+      callBackFunName: 'show1',
+      alt: '图片1',
+      style: ConstantParams.TABLECOLUMNSTYPE.IMAGE.style
+    },
+    {
+      src: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3300305952,1328708913&fm=27&gp=0.jpg',
+      callBackFunName: 'show2',
+      alt: '图片2',
+      style: ConstantParams.TABLECOLUMNSTYPE.IMAGE.style
+    }],
+    fixed: 'left',
+    width: 50
+  },
+  { label: '合同编号', name: 'number', fixed: 'left' },
+  { label: '合同名称', name: 'title', fixed: 'left', minWidth: 155 },
+  { label: '客户名称', name: 'name', fixed: 'left' },
+  { label: '机构ID', name: 'mechNo' },
+  { label: '智慧脸账号', name: 'account' },
+  { label: '省份', name: 'province' },
+  { label: '签约类型', name: 'signTypeVal' },
+  { label: '合同金额', name: 'amount' },
+  { label: '对应商机', name: 'opptyName', minWidth: 155 },
+  { label: '合同开始日期', name: 'startTime', formater, width: 140 },
+  { label: '合同结束日期', name: 'endTime', formater, width: 140 },
+  { label: '审批状态', name: 'approvalStateVal' },
+  { label: '一级审批人', name: 'firApprPer', width: 100 },
+  { label: '二级审批人', name: 'secApprPer', width: 100 },
+  { label: '当前阶段', name: 'stateVal' },
+  { label: '创建人', name: 'creator' },
+  { label: '创建时间', name: 'createTime', formater, width: 140 },
+  { label: '驳回原因', name: 'rejectReason' },
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.BUTTON.label,
+    name: '',
+    value: [{
+      label: '编辑',
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
+      callBackFunName: 'show3'
+    },
+    { label: '查看',
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
+      callBackFunName: 'show4'
+    }
+    ],
+    fixed: 'right',
+    width: 50
+  },
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.BUTTON.label,
+    name: '',
+    value: [{
+      label: '查看',
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
+      callBackFunName: 'handleClick'
+    }
+    ],
+    fixed: 'right',
+    width: 100
+  }
+]
+ */
+import { getTypeOf } from '../utils/index.js'
 export default {
   name:'ElpTable',
   props: {
@@ -69,7 +159,7 @@ export default {
       required: true
     },
     tableColumns: {
-      type: Array,
+      type: Array|Function,
       required: true
     },
     authority: {
@@ -96,6 +186,21 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    showRowNumber: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    border: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    fit: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data() {
@@ -117,7 +222,8 @@ export default {
     initFilters() {
       // console.log('this.tableData', this.tableData)
       this.tableData.forEach(data => {
-        this.tableColumns.forEach(v => {
+        const cloumns = getTypeOf(this.tableColumns,'function') ? this.tableColumns(this) : this.tableColumns
+        cloumns.forEach(v => {
           if (v.formater) {
             // console.log('tableformater', v.name, data[v.name])
             data[v.name] = v.formater(data[v.name])

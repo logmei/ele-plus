@@ -16,6 +16,8 @@ import ElpFilterOperator from './ElpTable/FilterOperator/index.js'
 import ElpPagination from './ElpTable/Pagination/index.js'
 import ElpTable from './ElpTable/index.js'
 
+import ConstantParams from './utils/constantParams.js'
+
 
 const components = {
   ElpDialog,
@@ -39,6 +41,10 @@ const directives = {
   MouseScroll
 }
 
+const params = {
+  ConstantParams
+}
+
 const install = function(Vue){
   if(install.installed) return 
   install.installed = true
@@ -47,6 +53,11 @@ const install = function(Vue){
   })
   Object.values(directives).map(directive=>{
     Vue.directive(directive.name,directive)
+  })
+  Object.values(params).map(param=>{
+    Vue.myParams = function(){
+      return params
+    }
   })
 }
 
@@ -73,5 +84,6 @@ export {
   ElpControllerTable,
   ElpFilterOperator,
   ElpPagination,
-  ElpTable
+  ElpTable,
+  ConstantParams
 }
