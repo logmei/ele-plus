@@ -8,6 +8,8 @@
       :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
+      :prev-text="prevText"
+      :next-text="nextText"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
@@ -52,6 +54,14 @@ export default {
     },
     hidden: {
       type: Boolean,
+      default: false
+    },
+    prevText: {
+      type: String,
+      default: false
+    },
+    nextText: {
+      type: String,
       default: false
     }
   },

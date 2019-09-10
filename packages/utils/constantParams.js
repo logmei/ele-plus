@@ -32,7 +32,7 @@ const constantParams = {
       },
       DATEPICKER: {
         key: 'datepicker',
-        description: '日期范围',
+        description: '日期',
         format: 'yyyy-MM-dd'
       },
       HIDDEN: {

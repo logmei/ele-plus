@@ -18,10 +18,11 @@
     :total="total" 
     :page.sync="pageNum" 
     :limit.sync="pageSize" 
+    :prev-text="prevText"
+      :next-text="nextText"
     @pagination="getTableDataList" 
     />
-    <DialogComponent
-      ref="dialog-ref"
+    <DialogComponent v-if="dialogDefault"
       :visible.sync="dialogVisible"
       :title="dialogTitle"
       :slide-out-type="slideType"
@@ -32,6 +33,7 @@
     >
     <slot v-bind:row="row"></slot>
     </DialogComponent>
+    <slot v-else name="detail" v-bind:row="row"></slot>
   </div>
 </template>
 <script>
@@ -101,6 +103,19 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    prevText: {
+      type: String,
+      default: false
+    },
+    nextText: {
+      type: String,
+      default: false
+    },
+    dialogDefault: {
+      type: Boolean,
+      required: false,
+      default: true,
     }
   },
   data() {

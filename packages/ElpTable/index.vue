@@ -40,25 +40,29 @@
             <el-button v-for="(button,i) in item.value" :key="i" :type="button.entity.type" :plain="button.entity.styleType==='plain'" @click="clickButton(scope.row,button.callBackFunName)">{{ button.label }}</el-button>
           </span>
           <span v-if="!item.valueType || (item.valueType&&item.valueType==='data')">
-            <span v-if="(!scope.row[item.name] || scope.row[item.name]==='')" slot="reference">
+            
+            <span v-if="(!scope.row[item.name].value || scope.row[item.name].value==='') && ( !scope.row[item.name].icon || scope.row[item.name].icon ==='')" slot="reference">
               ------
+            </span>
+            <span class="elp-table__cell" v-else-if="scope.row[item.name].icon && scope.row[item.name].icon !==''" slot="reference">
+              <i :class="'el-icon-'+scope.row[item.name].icon"></i>
+               <span class="elp-table__cell-value">{{ scope.row[item.name].value }}</span> 
             </span>
             <span v-else>
               <span v-if="!item.minWidth">
-                {{ scope.row[item.name] }}
+                 {{ scope.row[item.name].value }}
               </span>
               <el-popover
                 v-else
                 placement="bottom"
                 trigger="hover"
-                :content="String(scope.row[item.name])"
+                :content="String(scope.row[item.name].value)"
               >
-                <span slot="reference"><span :class="item.minWidth?'cell-center-item':''">{{ scope.row[item.name] }}</span></span>
+                <span slot="reference"><span :class="item.minWidth?'cell-center-item':''">{{ scope.row[item.name].value }}</span></span>
               </el-popover>
             </span>
 
           </span>
-          <slot></slot>
         </template>
       </el-table-column>
 
@@ -210,8 +214,8 @@ export default {
   },
   watch: {
     tableData: {
-      handler: 'initFilters',
-      deep: true
+      handler: 'initFilters'
+      // deep: true
     },
     clearSelectStatus: function() {
       this.multipleSelection = []
@@ -226,7 +230,10 @@ export default {
         cloumns.forEach(v => {
           if (v.formater) {
             // console.log('tableformater', v.name, data[v.name])
-            data[v.name] = v.formater(data[v.name])
+            const value = v.formater(data[v.name])
+            data[v.name] = typeof value === 'object' ? value : { value }
+          } else {
+            data[v.name] = { value : data[v.name] }
           }
         })
       })

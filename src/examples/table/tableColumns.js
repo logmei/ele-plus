@@ -2,7 +2,7 @@ import { parseTimeMilliSecond } from '../../../packages/utils/index.js'
 import { ConstantParams } from '../../../packages/index.js'
 // 合同列表列
 const contractColumns = [
-  { label: '合同名称', name: 'title', fixed: 'left', minWidth: 155 },
+  { label: '合同名称', name: 'title', fixed: 'left', minWidth: 155 ,formater: formaterIconV},
   { label: '客户名称', name: 'name', fixed: 'left' },
   { label: '机构ID', name: 'mechNo' },
   { label: '智慧脸账号', name: 'account' },
@@ -45,6 +45,10 @@ function formater(v) {
 function formaterByDay(v) {
   const cFormat = '{y}-{m}-{d}'
   return v === null || v === 'null' ? '------' : parseTimeMilliSecond(v, cFormat)
+}
+
+function formaterIconV(v){
+  return {value:v,icon:'edit'}
 }
 
 /** 模板
