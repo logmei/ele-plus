@@ -159,14 +159,15 @@ export default {
     },
     // 获取合同数据列表
     getDataList() {
-      if(Object.keys(this.search).length===0) this.search = this.searchParams.reduce((search,v,index)=>{
-         search[v.name] = v.value
-         return search
-        },{})
+      // if(Object.keys(this.search).length===0) this.search = this.searchParams.reduce((search,v,index)=>{
+      //    search[v.name] = v.value
+      //    return search
+      //   },{})
       const params = {}
       params.pageNum = this.pageNum
       params.pageSize = this.pageSize
       Object.assign(params, this.search)
+      // console.log('params......',params)
       this.tableDataInterface(params).then(data => {
         // console.log('ContractTableDataInterface--', data)
         const result = data.result

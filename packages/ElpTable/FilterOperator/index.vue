@@ -129,7 +129,13 @@ export default {
     },
     query:debounce(function(){
        const search = this.formItems.reduce((search,v,index)=>{
-         search[v.name] = v.value
+         if(this.items[index].type === 'datepickerrange'){
+           search.startDate = v.value[0]
+           search.endDate = v.value[1]
+         }else{
+            search[v.name] = v.value
+         }
+         
          return search
       },{})
       this.$emit('query',search)

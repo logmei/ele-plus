@@ -44,11 +44,11 @@ export default {
       contractColumns:contractColumns,//列说明
       //查询条件form中的内容说明
       searchParams:[
-          {name:'name',type:'INPUT',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
-          {name:'sex',type:'SELECT',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
-          {name:'daterange',type:'DATEPICKERRANGE',label:'选择日期范围',value:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'},
-          {name:'date',type:'DATEPICKER',label:'选择日期',value:'2019-09-01',format:'yyyy-MM-dd',valueFormat:'yyyy-MM-dd'},
-          {name:'guid',type:'HIDDEN',label:'',value:'1'}
+          {name:'name',type:'input',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
+          {name:'sex',type:'select',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
+          {name:'daterange',type:'datepickerrange',label:'选择日期范围',value:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'},
+          {name:'date',type:'datepicker',label:'选择日期',value:'2019-09-01',format:'yyyy-MM-dd',valueFormat:'yyyy-MM-dd'},
+          {name:'guid',type:'hidden',label:'',value:'1'}
       ],
     }
   },
