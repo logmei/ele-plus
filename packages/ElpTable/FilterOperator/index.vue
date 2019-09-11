@@ -2,7 +2,7 @@
   <el-form :inline="true" class="elp-operator-form-inline">
     <div class="elp-operator-params">
     <el-form-item v-for="(item,index) in items" :key="index" :label="item.label">
-      <span v-if="item.type==='INPUT'">
+      <span v-if="item.type==='input'">
         <el-input 
         v-model="formItems[index].value" 
         :placeholder="item.placeholder?item.placeholder:item.label"
@@ -10,10 +10,10 @@
         :class="item.className ? item.className : ''"
         ></el-input>
       </span>
-      <span v-else-if="item.type==='HIDDEN'">
+      <span v-else-if="item.type==='hidden'">
         <input v-model="formItems[index].value" type="hidden"/>
       </span>
-      <span v-if="item.type==='SELECT'">
+      <span v-if="item.type==='select'">
         <el-select 
         v-model="formItems[index].value" 
         :placeholder="item.placeholder?item.placeholder:item.label"
@@ -23,7 +23,7 @@
         <el-option v-for="(option,i) in item.list" :key="i" :label="option.label" :value="option.key"></el-option>
       </el-select>
       </span>
-      <span v-else-if="item.type==='DATEPICKERRANGE'">
+      <span v-else-if="item.type==='datepickerrange'">
         <el-date-picker
         v-model="formItems[index].value"
         type="daterange"
@@ -37,7 +37,7 @@
         >
        </el-date-picker>
       </span>
-      <span v-else-if="item.type==='DATEPICKER'">
+      <span v-else-if="item.type==='datepicker'">
         <el-date-picker
           v-model="formItems[index].value"
           type="date"
@@ -81,15 +81,18 @@
       }
     }
  * items:[Array]
- * 例如：[
- *        {name:'name',type:'INPUT',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
-          {name:'sex',type:'SELECT',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
-          {name:'daterange',type:'DATEPICKERRANGE',label:'选择日期范围',value:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'},
-          {name:'date',type:'DATEPICKER',label:'选择日期',value:'2019-09-01',format:'yyyy-MM-dd',valueFormat:'yyyy-MM-dd'},
-          {name:'guid',type:'HIDDEN',label:'',value:'1'}
- * ]
+ * 例如：
+ * import { ConstantParams } from '../../../packages/index.js'
+ *       [
+ *        {name:'name',type:ConstantParams.FILTERTYPE.INPUT.key,label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
+          {name:'sex',type:ConstantParams.FILTERTYPE.SELECT.key,label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
+          {name:'daterange',type:ConstantParams.FILTERTYPE.DATEPICKERRANGE.key,label:'选择日期范围',value:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'},
+          {name:'date',type:ConstantParams.FILTERTYPE.DATEPICKER.key,label:'选择日期',value:'2019-09-01',format:'yyyy-MM-dd',valueFormat:'yyyy-MM-dd'},
+          {name:'guid',type:ConstantParams.FILTERTYPE.HIDDEN.key,label:'',value:'1'}
+ *      ]
  */
 import { debounce } from '../../utils/index.js'
+
 export default {
   name: 'ElpFilterOperator',
   props:{

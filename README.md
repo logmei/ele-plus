@@ -1,6 +1,6 @@
 ### [代码仓库](https://github.com/logmei/ele-plus.git)
 ## 版本详细说明，请查看doc下面的版本文件
-## 最新版本 v0.2.8
+## 最新版本 v0.3.6
 ## 安装
 ```
 npm install ele-plus -S
@@ -27,14 +27,24 @@ new Vue({
 #### 按需引入
   ```
     import {
-        ElpDialog,
-        ElpSearch,
-        ElpSvgIcon,
-        ElpButton,
-        ElpImageDialog,
-        ElpImageOfSelfDialog,
-        ElpImagesDialog,
-        ElpImageList
+          ElpDialog,
+          ElpSearch,
+          ElpSvgIcon,
+          ElpButton,
+          ElpImageDialog,
+          ElpImageList,
+          ElpImageOfSelfDialog,
+          ElpImagePage,
+          ElpImagesDialog,
+          ShortCut,
+          DragImage,
+          MouseScroll,
+          ElpCarousel,
+          ElpControllerTable,
+          ElpFilterOperator,
+          ElpPagination,
+          ElpTable,
+          ConstantParams
     } from 'ele-plus'
     
     Vue.use(ElpDialog)
@@ -45,6 +55,17 @@ new Vue({
     Vue.use(ElpImageOfSelfDialog)
     Vue.use(ElpImagesDialog)
     Vue.use(ElpImageList)
+    Vue.use(ElpImageOfSelfDialog)
+    Vue.use(ElpImagePage)
+    Vue.use(ElpImagesDialog)
+    Vue.use(ShortCut)
+    Vue.use(DragImage)
+    Vue.use(MouseScroll)
+    Vue.use(ElpControllerTable)
+    Vue.use(ElpFilterOperator)
+    Vue.use(ElpPagination)
+    Vue.use(ElpTable)
+    Vue.use(ConstantParams)
 ```
 ## 组件使用说明 
 ### 弹出框：elp-dialog
@@ -363,20 +384,561 @@ export default {
   > 绑定事件：downWheel（向下滚动），upWheel（向上滚动）
   > 示例:
   ```
-  <div 
-    v-mouseScroll 
-    @downWheel="downWheel" 
-    @upWheel="upWheel"  
-    >
-    内容
-    </div>
+     <div 
+      v-mouseScroll 
+      @downWheel="downWheel" 
+      @upWheel="upWheel"  
+      >
+      内容
+      </div>
 
   ```
+ > 使用之前先介绍一下静态变量ConstantsParam 
+ ### 静态变量ConstantsParam 
+ * 1、引入 import { ConstantParams } from 'ele-plus'
+ * 2、变量内容
+ ```js
+ const constantParams = {
+    name:'ConstantsParam',
+    //tableColumns的数据类型
+    TABLECOLUMNSTYPE : {
+      IMAGE: {
+        key: 'img',
+        label: '图标',
+        style: 'width:30px;height:30px'
+      },
+      BUTTON: {
+        key: 'button',
+        label: '操作',
+        type: 'primary',
+        styleType: 'plain'
+      },
+      DATA: {
+        key: 'data'
+      }
+    },
+    //filterOperator组件需要的items数据类型
+    FILTERTYPE : {
+      INPUT: {
+        key: 'input',
+        description: '输入框'
+      },
+      SELECT: {
+        key: 'select',
+        description: '选择框'
+      },
+      DATEPICKERRANGE: {
+        key: 'datepickerrange',
+        description: '日期范围',
+        format: 'yyyy-MM-dd'
+      },
+      DATEPICKER: {
+        key: 'datepicker',
+        description: '日期',
+        format: 'yyyy-MM-dd'
+      },
+      HIDDEN: {
+        key: 'hidden',
+        description: '隐藏输入框'
+      }
+    }
+}
+ ```
+ ### elp-table组件
+  
+  
+  #### 1、引入指令
+  ```
+  import {ElpTable} from 'ele-plus'
+  ```
 
+   #### 2、局部注册
+  ```
+  components: {
+      ElpTable
+    }
+  ```
+   #### 3、全局注册
+  ```
+  Vue.use(ElpTable)
+  ``` 
+  #### 4、属性
+  | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| tableData  | 显示的数据  | Array | true | |
+| tableColumns  | 表头和数据类型等 | Array| true | |
+| showRowNumber  | 显示序号 | Boolean  | false | false|
+| border | 竖线 | Boolean | false | false|
+| loading | 是否显示加载中 | Boolean | false | false|
+| rowClick | 是否触发行点击事件 | Boolean | false | false|
+| authority | 是否有多选操作权限 | Boolean | false | false|
+| clearSelectStatus | 清空多选框(监控该值发生改变会触发) |Number | false | 0
+| fit | 列的宽度是否自撑开 | Boolean | false | true|
+ #### 5、事件
+  | 事件名 | 说明 | 参数 |
+|------|------------|------------|
+| handleClick  | 若rowClick设置为true,则触发，或rowClick设置为false,tableColumns中设置handleClick事件触发  | row |
+| tableColumns设置的回调函数名  | tableColumns设置的回调函数名 | row |
+| handleSelectionChange  | 多选框触发选择 | 多选框选中列表 |
 
-  
-  
-    
-  
-  
-    
+ #### 6、tableColumns说明
+ ##### js文件模板
+ ```js
+ /** 模板
+ *authority:权限（默认为true）
+  valueType:列中数据类型（默认data）TABLECOLUMNSTYPE中的类型
+  label:列头名
+  name：普通数据对应tableData中的字段
+  formater：回调函数
+  value:操作列
+*/
+import { ConstantParams } from 'ele-plus'
+  const contractColumns = [
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.IMAGE.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.IMAGE.label,
+    name: '',
+    value: [{
+      src: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3300305952,1328708913&fm=27&gp=0.jpg',
+      callBackFunName: 'show1',
+      alt: '图片1',
+      style: ConstantParams.TABLECOLUMNSTYPE.IMAGE.style
+    },
+    {
+      src: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3300305952,1328708913&fm=27&gp=0.jpg',
+      callBackFunName: 'show2',
+      alt: '图片2',
+      style: ConstantParams.TABLECOLUMNSTYPE.IMAGE.style
+    }],
+    fixed: 'left',
+    width: 50
+  },
+  { label: '编号', name: 'number', fixed: 'left',formater:formaterIconV },
+  { label: '名称', name: 'title', fixed: 'left', minWidth: 155 },
+  { label: '使用名', name: 'name', fixed: 'left' },
+  { label: 'ID', name: 'mechNo' },
+  { label: '账号', name: 'account' },
+  { label: '省份', name: 'province' },
+  { label: '类型', name: 'signTypeVal' },
+  { label: '金额', name: 'amount' },
+  { label: '对应名', name: 'opptyName', minWidth: 155 },
+  { label: '开始日期', name: 'startTime', formater, width: 140 },
+  { label: '结束日期', name: 'endTime', formater, width: 140 },
+  { label: '当前阶段', name: 'stateVal' },
+  { label: '创建人', name: 'creator' },
+  { label: '创建时间', name: 'createTime', formater, width: 140 },
+  { label: '驳回原因', name: 'rejectReason' },
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.BUTTON.label,
+    name: '',
+    value: [{
+      label: '编辑',
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
+      callBackFunName: 'show3'
+    },
+    { label: '查看',
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
+      callBackFunName: 'show4'
+    }
+    ],
+    fixed: 'right',
+    width: 50
+  },
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.BUTTON.label,
+    name: '',
+    value: [{
+      label: '查看',
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
+      callBackFunName: 'handleClick'
+    }
+    ],
+    fixed: 'right',
+    width: 100
+  }
+]
+// 年月日时分
+function formater(v) {
+  const cFormat = '{y}-{m}-{d} {h}:{i}'
+  const val = v === null || v === 'null' ? '------' : parseTimeMilliSecond(v, cFormat)
+  // console.log('formater', val)
+  return val
+}
+// 年月日
+function formaterByDay(v) {
+  const cFormat = '{y}-{m}-{d}'
+  return v === null || v === 'null' ? '------' : parseTimeMilliSecond(v, cFormat)
+}
+
+function formaterIconV(v){
+  return {value:v,icon:'edit'}
+}
+ ```
+##### 结构说明：
+
+| 参数 | 说明 | 类型 | 是否必填 | 
+|-------|----------|-------|------|----|
+|valueType| ConstantsParam.TABLECOLUMNSTYPE的数据key值| String | false(不添加默认为data) 
+|authority|是否有权限查看|Boolean|false(不添加默认有权限)
+|label|列标题名称| String | true |
+|name |字段名|String|false(按钮或图标内容不需要)
+|width|列宽|Number|false(默认为50)
+|minWidth|最小列宽（若超过了宽度显示'...',并有Popover提示全部内容）|Number|false
+|fixed|固定列|'left'或'right'|
+|formater|转换数据的回调函数|Function|false|
+
+ ##### formater回调函数
+ * 1、参数：第一个参数为name对应的值，第二个参数为row
+ * 2、普通数据
+ ```js
+ function formater(v){
+     return v+'test'//或 return {value:v+'test'}
+ }
+ ```
+ * 3、联合其他字段修改
+ ```js
+ function formaterNewname(v,row){
+     return v + row.name//或 return {value:v + row.name}
+ }
+ ```
+ * 4、带有icon的数据内容
+ ```js
+ function formaterIconV(v){
+  return {value:v,icon:'edit'}//icon为icon的name
+}
+ ```
+ ##### 图标
+ * 1、valueType: ConstantsParam.TABLECOLUMNSTYPE.IMAGE.key（不可变）
+ * 2、label: ConstantsParam.TABLECOLUMNSTYPE.IMAGE.label（列标题可修改）
+ * 3、value:数组（可以设置多个图片），数据结构
+ 
+ | 列名 | 说明 |
+|--------|----------|
+|src |图片地址|
+|callBackFunName|回调函数名称（会抛出该事件）|
+|alt|图片说明|
+|style|图片样式（可修改）默认是：'width:30px;height:30px'
+##### 按钮
+ * 1、valueType: ConstantsParam.TABLECOLUMNSTYPE.BUTTON.key（不可变）
+ * 2、label: ConstantsParam.TABLECOLUMNSTYPE.BUTTON.label（列标题可修改）
+ * 3、value:数组（可以设置多个按钮），数据结构
+ 
+ | 列名 | 说明 |
+|--------|----------|
+|label |名称|
+|entity|按钮样式默认ConstantsParam.TABLECOLUMNSTYPE.BUTTON|
+|callBackFunName|回调函数名称（会抛出该事件）|
+* 4、ConstantsParam.TABLECOLUMNSTYPE.BUTTON
+
+| 列名 | 说明 | 默认值|可选项|
+|--------|----------|-------|-----|
+|key | 不可修改 |'button'
+|label|可修改、显示名称| '操作'
+|type|可修改对应el-button中的type|'primary'
+|styleType|可修改|'plain'|plain/round/disabled
+|icon|可修改||对应elementUI中的icon名称
+
+### elp-filter-operator组件
+#### 1、引入指令
+  ```
+  import {ElpFilterOperator} from 'ele-plus'
+  ```
+
+   #### 2、局部注册
+  ```
+  components: {
+      ElpFilterOperator
+    }
+  ```
+   #### 3、全局注册
+  ```
+  Vue.use(ElpFilterOperator)
+  ``` 
+  #### 4、属性
+  | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| items  | 内容  | Array | true | |
+
+ #### 5、事件
+  | 事件名 | 说明 | 参数 |
+|------|------------|------------|
+| query  | 点击回调和查询触发事件(已增加防抖)  | 查询条件已对象形式返回如：{name:'logmei',sex:'0'} |
+#### 6、items的数据结构
+| 字段名 | 类型 | 说明 | 
+|--------|----------|-------|
+|name | String |字段名称(用于后端交互)
+|type|ConstantParams.FILTERTYPE的key值| INPUT/SELECT/DATEPICKERRANGE/DATEPICKER/HIDDEN
+|label| String  |说明label
+|value| String/Array | 默认值(type为datepickerrange时['2019-09-01','2019-09-06'])
+|placeholder|String
+|style|Object|样式
+|className|String|类名
+|list|Array|type为select时的列表[{key:'0',label:'女'},{key:'1',label:'男'}]
+|format|String|日期控件格式转换
+|valueFormat|String|设置返回值的格式
+### elp-controller-table组件
+> elp-filter-operator、elp-table、elp-pagination、elp-dialog组合组件,通过tableColumns和searchParams来显示查询条件和列表，以提供的tableDataInterface接口来查询条件，重置、查询、分页自动绑定查询接口，行操作默认支持弹出框显示详情，弹出框保留slot来渲染内容；也可以通过设置dialogDefault来设置是否自己做具体的内容显示。（详细使用说明请往下看）
+
+![](https://user-gold-cdn.xitu.io/2019/9/11/16d1e1196f51d5c6?w=1475&h=734&f=png&s=91758)
+
+![](https://user-gold-cdn.xitu.io/2019/9/11/16d1e1392ba54dd1?w=1405&h=495&f=png&s=84539)
+#### 1、引入指令
+  ```
+  import {ElpControllerTable} from 'ele-plus'
+  ```
+
+   #### 2、局部注册
+  ```
+  components: {
+      ElpControllerTable
+    }
+  ```
+   #### 3、全局注册
+  ```
+  Vue.use(ElpControllerTable)
+  ``` 
+  #### 4、属性
+  | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| tableDataInterface  | 查询数据接口  | Function | true | |
+| searchParams  | elp-filter-operator组件的items | Array| true | |
+| tableColumns  | elp-table组件的tableColumns | Array  | true | |
+| fit | 列的宽度是否自撑开 | Boolean | false | true|
+|showRowNumber| 是否显示序号 | Boolean | false | false
+|border | 是否显示竖线 | Boolena | false | false
+| dialogTitle | elp-dialog需要的title | String | false | '' |
+| slideType | elp-dialog弹出效果 | String | false | 'center'|
+| dialogDefault | 查看详情是否使用默认弹出框true(使用默认弹出框)、false(使用detail插槽) | Boolean | false | true|
+| authority | elp-table使用的是否有多选操作权限 | Object | false | {operator:false}|
+| reload | 是否重新加载数据 |Boolean | false | false
+| prevText | 分页上一页显示的text | String | false |''
+| nextText | 分页下一页显示的test | String | false | ''
+
+ #### 5、事件
+  | 事件名 | 说明 | 参数 |
+|------|------------|------------|
+| handleClick  | 若rowClick设置为true,则触发，或rowClick设置为false,tableColumns中设置handleClick事件触发  | row |
+| handleSelectionChange  | 多选框触发选择 | 多选框选中列表 |
+| dialogOpened  | 弹出框弹出事件
+| dialogClosed  | 弹出框弹出事件
+| dialogDrag  | 弹出框弹出事件
+| dialogClose  | 弹出框弹出事件
+#### 6、示例
+* 1、elp-controller-table使用示例
+```html
+<template>
+  <elp-controller-table
+  dialog-title="内容"
+  border
+  :table-data-interface="tableDataInterface"
+  :search-params="searchParams"
+  :table-columns="contractColumns"
+  :show-row-number="true"
+  :prevText="'上一页'"
+  :nextText="'下一页'"
+  :dialogDefault="false"
+  @handleClick="dialogVisible=true"
+  >
+  <!-- 使用默认弹出框
+    <template v-slot:default="row">
+    {{row}}
+  </template> -->
+  <!-- 自己编写弹出框 -->
+  <template v-slot:detail="row">
+    <elp-dialog
+    :visible.sync="dialogVisible"
+    >
+    {{row}}
+    </elp-dialog>
+  </template>
+  </elp-controller-table>
+</template>
+<script>
+import TableList from './interface.js'//接口
+import contractColumns from './tableColumns.js'//table列说明
+// import {ElpControllerTable} from 'ele-plus' //单独引用
+export default {
+  // components:{
+  //   ElpControllerTable
+  // },
+  data(){
+    return {
+      dialogVisible:false,
+      tableDataInterface:TableList,//接口
+      contractColumns:contractColumns,//列说明
+      //查询条件form中的内容说明
+      searchParams:[
+          {name:'name',type:'INPUT',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
+          {name:'sex',type:'SELECT',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
+          {name:'daterange',type:'DATEPICKERRANGE',label:'选择日期范围',value:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'},
+          {name:'date',type:'DATEPICKER',label:'选择日期',value:'2019-09-01',format:'yyyy-MM-dd',valueFormat:'yyyy-MM-dd'},
+          {name:'guid',type:'HIDDEN',label:'',value:'1'}
+      ],
+    }
+  },
+  methods:{
+    // tableDataInterface:(params)=>{
+    //   return TableList
+    // }
+  }
+}
+</script>
+```
+* 2、tableColumns.js示例
+```js
+import { parseTimeMilliSecond } from '@/utils/index.js' //日期格式化
+import { ConstantParams } from 'ele-plus'
+// 合同列表列
+const contractColumns = [
+  { label: '合同名称', name: 'title', fixed: 'left', minWidth: 155 ,formater: formaterIconV},
+  { label: '客户名称', name: 'name', fixed: 'left' },
+  { label: '机构ID', name: 'mechNo' },
+  { label: '智慧脸账号', name: 'account' },
+  { label: '省份', name: 'province' },
+  { label: '签约类型', name: 'signTypeVal' },
+  { label: '合同金额', name: 'amount' },
+  { label: '对应商机', name: 'opptyName', minWidth: 155 },
+  { label: '合同开始日期', name: 'startTime', formater: formaterByDay, width: 140 },
+  { label: '合同截止日期', name: 'endTime', formater: formaterByDay, width: 140 },
+  { label: '审批状态', name: 'approvalStateVal' },
+  { label: '一级审批人', name: 'firApprPer', width: 100 },
+  { label: '二级审批人', name: 'secApprPer', width: 100 },
+  { label: '当前阶段', name: 'stateVal' },
+  { label: '创建人', name: 'creator' },
+  { label: '创建时间', name: 'createTime', formater, width: 140 },
+  { label: '驳回原因', name: 'rejectReason' },
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: ConstantParams.TABLECOLUMNSTYPE.BUTTON.label,
+    name: '',
+    value: [{
+      label: '查看',
+      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
+      callBackFunName: 'handleClick'
+    }
+    ],
+    fixed: 'right',
+    width: 100
+  }
+]
+// 年月日时分
+function formater(v) {
+  const cFormat = '{y}-{m}-{d} {h}:{i}'
+  const val = v === null || v === 'null' ? '------' : parseTimeMilliSecond(v, cFormat)
+  // console.log('formater', val)
+  return val
+}
+// 年月日
+function formaterByDay(v) {
+  const cFormat = '{y}-{m}-{d}'
+  return v === null || v === 'null' ? '------' : parseTimeMilliSecond(v, cFormat)
+}
+
+function formaterIconV(v){
+  return {value:v,icon:'edit'}
+}
+
+export default contractColumns
+```
+* 3、interface.js示例
+```js
+export default function(params){
+   console.log('params',params)
+    return new Promise(resolve => {
+      resolve(
+        {
+          'code': 0,
+          'msg': 'success',
+          'result': {
+            'pageNum': 0,
+            'pageSize': 5,
+            'size': 2,
+            'startRow': 1,
+            'endRow': 1,
+            'total': 20,
+            'pages': 2,
+            'list': [
+              {
+                'guid': '122749434e7e414d87ebbe6e1fd4c62d',
+                'busGuid': '196749434e7e414d87ebbe6e1fd4c62d',
+                'apprProGuid': 'ef86b64853354551ae9a363e7723a8bd',
+                'number': '1000001',
+                'title': null,
+                'name': null,
+                'mechNo': null,
+                'account': null,
+                'province': '北京',
+                'signType': '1',
+                'signTypeVal': '软件收费版',
+                'amount': 1000,
+                'opptyName': '渐酒空金榼 花困蓬瀛',
+                'startTime': 1560156009000,
+                'endTime': 1560156013000,
+                'approvalState': 0,
+                'approvalStateVal': '待审批',
+                'firstLevelApprPer': null,
+                'secondLevelApprPer': null,
+                'state': 1,
+                'stateVal': '签约',
+                'creator': '于希德2',
+                'createTime': 1560156002000,
+                'rejectReason': null
+              },
+              {
+                'guid': '196749434e72344d87ebbe6e1fd4c62d',
+                'busGuid': '196749434e7e414d87ebbe6e1fd4c62d',
+                'apprProGuid': 'ef86b64853354551ae9a363e7723a8bd',
+                'number': '1000001',
+                'title': 'title',
+                'name': 'name',
+                'mechNo': 'mechNo',
+                'account': 'account',
+                'province': '北京',
+                'signType': '1',
+                'signTypeVal': '软件收费版',
+                'amount': 1000,
+                'opptyName': '渐酒空金榼 花困蓬瀛',
+                'startTime': 1560156009000,
+                'endTime': 1560156013000,
+                'approvalState': 0,
+                'approvalStateVal': '待审批',
+                'firstLevelApprPer': null,
+                'secondLevelApprPer': null,
+                'state': 1,
+                'stateVal': '签约',
+                'creator': '于希德2',
+                'createTime': 1560156002000,
+                'rejectReason': 'reason'
+              }
+            ],
+            'prePage': 0,
+            'nextPage': 1,
+            'isFirstPage': false,
+            'isLastPage': false,
+            'hasPreviousPage': false,
+            'hasNextPage': true,
+            'navigatePages': 8,
+            'navigatepageNums': [
+              1
+            ],
+            'navigateFirstPage': 1,
+            'navigateLastPage': 1,
+            'lastPage': 1,
+            'firstPage': 1
+          }
+        }
+      )
+    })
+}
+```
+
+#### 7、[在线演示](https://codepen.io/logmei/pen/jONxOMV)
+
+ 
+ 

@@ -37,7 +37,18 @@
             <img v-for="(button,i) in item.value" :key="i" :style="button.style" :title="button.callBackFunName" :class="button.callBackFunName&&!rowClick?'img-class pointer-class':'img-class'" :src="button.src" @click="clickButton(scope.row,button.callBackFunName)">
           </span>
           <span v-if="item.valueType==='button'&& !rowClick" class="elp-operator-class">
-            <el-button v-for="(button,i) in item.value" :key="i" :type="button.entity.type" :plain="button.entity.styleType==='plain'" @click="clickButton(scope.row,button.callBackFunName)">{{ button.label }}</el-button>
+            <el-button 
+            v-for="(button,i) in item.value" 
+            :key="i" 
+            :type="button.entity.type" 
+            :plain="button.entity.styleType==='plain'" 
+            :round="button.entity.styleType==='round'" 
+            :disabled="button.entity.styleType==='disabled'" 
+            :icon="button.entity.icon?'el-icon-'+button.entity.icon:''"
+            @click="clickButton(scope.row,button.callBackFunName)"
+            >
+            {{ button.label }}
+            </el-button>
           </span>
           <span v-if="!item.valueType || (item.valueType&&item.valueType==='data')">
             
@@ -75,13 +86,15 @@
  
 /** 模板
  *authority:权限（默认为true）
-  valueType:列中数据类型（默认data）'@/utils/constantsParam.js'->TABLECOLUMNSTYPE
+  valueType:列中数据类型（默认data）TABLECOLUMNSTYPE中的类型
   label:列头名
   name：普通数据对应tableData中的字段
   formater：回调函数
   value:操作列
+*/
+/**
   import { ConstantParams } from 'ele-plus'
- * const contractColumns = [
+  const contractColumns = [
   {
     authority: true,
     valueType: ConstantParams.TABLECOLUMNSTYPE.IMAGE.key,
@@ -102,17 +115,17 @@
     fixed: 'left',
     width: 50
   },
-  { label: '合同编号', name: 'number', fixed: 'left' },
-  { label: '合同名称', name: 'title', fixed: 'left', minWidth: 155 },
-  { label: '客户名称', name: 'name', fixed: 'left' },
-  { label: '机构ID', name: 'mechNo' },
-  { label: '智慧脸账号', name: 'account' },
+  { label: '编号', name: 'number', fixed: 'left' },
+  { label: '名称', name: 'title', fixed: 'left', minWidth: 155 },
+  { label: '使用名', name: 'name', fixed: 'left' },
+  { label: 'ID', name: 'mechNo' },
+  { label: '账号', name: 'account' },
   { label: '省份', name: 'province' },
-  { label: '签约类型', name: 'signTypeVal' },
-  { label: '合同金额', name: 'amount' },
-  { label: '对应商机', name: 'opptyName', minWidth: 155 },
-  { label: '合同开始日期', name: 'startTime', formater, width: 140 },
-  { label: '合同结束日期', name: 'endTime', formater, width: 140 },
+  { label: '类型', name: 'signTypeVal' },
+  { label: '金额', name: 'amount' },
+  { label: '对应名', name: 'opptyName', minWidth: 155 },
+  { label: '开始日期', name: 'startTime', formater, width: 140 },
+  { label: '结束日期', name: 'endTime', formater, width: 140 },
   { label: '审批状态', name: 'approvalStateVal' },
   { label: '一级审批人', name: 'firApprPer', width: 100 },
   { label: '二级审批人', name: 'secApprPer', width: 100 },
@@ -230,7 +243,7 @@ export default {
         cloumns.forEach(v => {
           if (v.formater) {
             // console.log('tableformater', v.name, data[v.name])
-            const value = v.formater(data[v.name])
+            const value = v.formater(data[v.name],data)
             data[v.name] = typeof value === 'object' ? value : { value }
           } else {
             data[v.name] = { value : data[v.name] }

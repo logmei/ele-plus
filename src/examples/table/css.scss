@@ -1,0 +1,14 @@
+@mixin pagination {
+  .pagination-container{
+    .el-pagination__total,.el-pagination__sizes{
+      float: left;
+    }
+    .btn-prev,
+    .el-pager,
+    .btn-next,
+    .el-pagination__jump{
+      float: right;
+    }
+  }
+  
+}

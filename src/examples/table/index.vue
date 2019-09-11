@@ -1,5 +1,6 @@
 <template>
-  <elp-controller-table
+<div class="ssss">
+<elp-controller-table
   dialog-title="内容"
   border
   :table-data-interface="tableDataInterface"
@@ -11,9 +12,11 @@
   :dialogDefault="false"
   @handleClick="dialogVisible=true"
   >
-  <!-- <template v-slot:default="row">
+  <!-- 使用默认弹出框
+    <template v-slot:default="row">
     {{row}}
   </template> -->
+  <!-- 自己编写弹出框 -->
   <template v-slot:detail="row">
     <elp-dialog
     :visible.sync="dialogVisible"
@@ -22,11 +25,14 @@
     </elp-dialog>
   </template>
   </elp-controller-table>
+</div>
+
+  
 </template>
 <script>
-import TableList from './interface.js'
-import contractColumns from './tableColumns.js'
-// import ElpControllerTable from '../../../packages/ElpTable/ControllerTable'
+import TableList from './interface.js'//接口
+import contractColumns from './tableColumns.js'//table列说明
+// import ElpControllerTable from '../../../packages/ElpTable/ControllerTable' //单独引用
 export default {
   // components:{
   //   ElpControllerTable
@@ -34,8 +40,9 @@ export default {
   data(){
     return {
       dialogVisible:false,
-      tableDataInterface:TableList,
-      contractColumns:contractColumns,
+      tableDataInterface:TableList,//接口
+      contractColumns:contractColumns,//列说明
+      //查询条件form中的内容说明
       searchParams:[
           {name:'name',type:'INPUT',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
           {name:'sex',type:'SELECT',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
@@ -52,3 +59,10 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+@import './css.scss';
+.ssss /deep/ {
+@include pagination
+} 
+
+</style>
