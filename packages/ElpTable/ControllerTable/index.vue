@@ -1,6 +1,10 @@
 <template>
   <div>
-    <filter-operator :items="searchParams" @query="query"></filter-operator>
+    <filter-operator 
+    ref="filterOperatorRef"
+    :items.sync="searchParams" 
+    @query="query"
+    />
     <table-component 
     :loading="listLoading" 
     :table-data="tableData" 
@@ -19,7 +23,8 @@
     :page.sync="pageNum" 
     :limit.sync="pageSize" 
     :prev-text="prevText"
-      :next-text="nextText"
+    :next-text="nextText"
+    :page-sizes="pageSizes"
     @pagination="getTableDataList" 
     />
     <DialogComponent v-if="dialogDefault"
@@ -116,7 +121,13 @@ export default {
       type: Boolean,
       required: false,
       default: true,
-    }
+    },
+    pageSizes: {
+      type: Array,
+      default() {
+        return [5, 10, 20, 30, 50]
+      }
+    },
   },
   data() {
     return {
@@ -136,19 +147,23 @@ export default {
       if (this.reload) {
         this.pageNum = 1
         this.clearSelectStatus++
-        this.getTableDataList()
+        this.initTableList()
       }
       console.log('table reload', this.clearSelectStatus)
     }
   },
-  created() {
+  mounted() {
     // 初始化列表数据
-    this.getTableDataList()
+    this.initTableList()
   },
   methods: {
     query(search){
+      // console.log('search......',search)
       this.search = search
       this.getTableDataList()
+    },
+    initTableList(){
+      this.$refs.filterOperatorRef.query()
     },
     // table数据
     getTableDataList() {
@@ -167,7 +182,7 @@ export default {
       params.pageNum = this.pageNum
       params.pageSize = this.pageSize
       Object.assign(params, this.search)
-      // console.log('params......',params)
+       console.log('params......',params)
       this.tableDataInterface(params).then(data => {
         // console.log('ContractTableDataInterface--', data)
         const result = data.result

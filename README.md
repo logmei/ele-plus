@@ -718,6 +718,7 @@ function formaterIconV(v){
 | reload | 是否重新加载数据 |Boolean | false | false
 | prevText | 分页上一页显示的text | String | false |''
 | nextText | 分页下一页显示的test | String | false | ''
+| pageSizes | 每页显示个数选择器的选项设置 | Array | false | [5, 10, 20, 30, 50]
 
  #### 5、事件
   | 事件名 | 说明 | 参数 |

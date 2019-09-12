@@ -10,6 +10,7 @@
   :prevText="'上一页'"
   :nextText="'下一页'"
   :dialogDefault="false"
+  :pageSizes="[10,50,100]"
   @handleClick="dialogVisible=true"
   >
   <!-- 使用默认弹出框
