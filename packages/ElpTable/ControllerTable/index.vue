@@ -127,7 +127,7 @@ export default {
       default() {
         return [5, 10, 20, 30, 50]
       }
-    },
+    }
   },
   data() {
     return {
@@ -144,12 +144,12 @@ export default {
   },
   watch: {
     reload: function() {
+       console.log('table reload', this.reload)
       if (this.reload) {
         this.pageNum = 1
         this.clearSelectStatus++
         this.initTableList()
       }
-      console.log('table reload', this.clearSelectStatus)
     }
   },
   mounted() {
@@ -158,7 +158,7 @@ export default {
   },
   methods: {
     query(search){
-      // console.log('search......',search)
+      console.log('search......',search)
       this.search = search
       this.getTableDataList()
     },
@@ -182,7 +182,7 @@ export default {
       params.pageNum = this.pageNum
       params.pageSize = this.pageSize
       Object.assign(params, this.search)
-       console.log('params......',params)
+      //  console.log('params......',params)
       this.tableDataInterface(params).then(data => {
         // console.log('ContractTableDataInterface--', data)
         const result = data.result

@@ -8,6 +8,7 @@
         :placeholder="item.placeholder?item.placeholder:item.label"
         :style="item.style ? item.style : ''"
         :class="item.className ? item.className : ''"
+        :clearable="item.clearable !== undefined ? item.clearable : true"
         ></el-input>
       </span>
       <span v-else-if="item.type==='hidden'">
@@ -19,6 +20,7 @@
         :placeholder="item.placeholder?item.placeholder:item.label"
         :style="item.style ? item.style : ''"
         :class="item.className ? item.className : ''"
+        :clearable="item.clearable !== undefined ? item.clearable : true"
         >
         <el-option v-for="(option,i) in item.list" :key="i" :label="option.label" :value="option.key"></el-option>
       </el-select>
@@ -34,6 +36,8 @@
         :value-format="item.valueFormat?item.valueFormat:'yyyy-MM-dd'"
         :style="item.style ? item.style : ''"
         :class="item.className ? item.className : ''"
+        :clearable="item.clearable !== undefined ? item.clearable : true"
+        :picker-options="item.pickerOptions"
         >
        </el-date-picker>
       </span>
@@ -46,6 +50,8 @@
           :value-format="item.valueFormat?item.valueFormat:'yyyy-MM-dd'"
           :style="item.style ? item.style : ''"
           :class="item.className ? item.className : ''"
+          :clearable="item.clearable !== undefined ? item.clearable : true"
+          :picker-options="item.pickerOptions"
           >
         </el-date-picker>
       </span>
@@ -83,19 +89,50 @@
  * items:[Array]
  * 例如：
  * import { ConstantParams } from '../../../packages/index.js'
- *       [
- *        {name:'name',type:ConstantParams.FILTERTYPE.INPUT.key,label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
-          {name:'sex',type:ConstantParams.FILTERTYPE.SELECT.key,label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
-          {name:'daterange',type:ConstantParams.FILTERTYPE.DATEPICKERRANGE.key,label:'选择日期范围',value:['2019-09-01','2019-09-06'],format:'yyyy-MM-dd'},
-          {name:'date',type:ConstantParams.FILTERTYPE.DATEPICKER.key,label:'选择日期',value:'2019-09-01',format:'yyyy-MM-dd',valueFormat:'yyyy-MM-dd'},
-          {name:'guid',type:ConstantParams.FILTERTYPE.HIDDEN.key,label:'',value:'1'}
- *      ]
+ *      [
+          {name:'name',type:'input',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
+          {name:'sex',type:'select',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
+          {
+            name:'daterange'
+            ,type:'datepickerrange'
+            ,label:'选择日期范围'
+            ,value:['2019-09-01','2019-09-06']
+            ,format:'yyyy-MM-dd'
+            ,clearable:false
+            , pickerOptions:{
+            disabledDate:(time) => {
+                let currentTime = Date.now()
+                let threeMonths = currentTime+24*60*60*1000
+                return time.getTime() < Date.now() || time.getTime() > threeMonths
+            }
+          }
+          },
+          {name:'date'
+          ,type:'datepicker'
+          ,label:'选择日期'
+          ,value:'2019-09-01'
+          ,format:'yyyy-MM-dd'
+          ,valueFormat:'yyyy-MM-dd'
+          ,clearable:false
+          , pickerOptions:{
+            disabledDate:(time) => {
+                return time.getTime() > Date.now()
+            }
+          }
+          },
+          {name:'guid',type:'hidden',label:'',value:count}
+      ],
  */
 import { debounce } from '../../utils/index.js'
 
 export default {
   name: 'ElpFilterOperator',
   props:{
+    clearable:{
+      type: Boolean,
+      required: false,
+      default: false
+    },
     items:{
       type: Array,
       required: true
@@ -104,6 +141,15 @@ export default {
   data(){
     return {
       formItems:[]
+    }
+  },
+  watch:{
+    items:{
+      handler:function(){
+        this.setFormItemsValues()
+      }
+     ,
+      deep:true
     }
   },
   created(){
