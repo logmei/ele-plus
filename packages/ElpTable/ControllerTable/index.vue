@@ -4,7 +4,16 @@
     ref="filterOperatorRef"
     :items.sync="searchParams" 
     @query="query"
-    />
+    >
+      <template v-slot:buttons="formItems">
+        <slot name="filterButtons" v-bind="formItems">
+        </slot>
+      </template>
+      <template v-slot:otherButtons="formItems">
+        <slot name="filterOtherButtons" v-bind="formItems">
+        </slot>
+      </template>
+    </filter-operator>
     <table-component 
     :loading="listLoading" 
     :table-data="tableData" 

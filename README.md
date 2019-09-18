@@ -681,6 +681,32 @@ function formaterIconV(v){
 |list|Array|type为select时的列表[{key:'0',label:'女'},{key:'1',label:'男'}]
 |format|String|日期控件格式转换
 |valueFormat|String|设置返回值的格式
+#### 7、slot
+| name | 说明 | 参数 | 
+|----------|--------|---------|
+| buttons | 按钮默认是重置和查询 | 查询参数值
+| otherButtons | 可以添加新的按钮 | 查询参数值
+* 查询参数值结构示例
+```js
+const formItems = [
+  {name: "name",value: "logmei"},
+  {name: "sex",value: "女"},
+  {name: "daterange",value: ["2019-09-01" , "2019-09-06"]},
+  {name: "date",value: "2019-09-01"},
+  {name: "guid",value: 0},
+  ]
+```
+* 使用示例
+```html
+ <template v-slot:buttons="formItems">
+   <el-button type="primary" @click="query(formItems)">查询</el-button>
+ </template>
+ <template v-slot:otherButtons="formItems">
+    <el-button type="primary" @click="exportFile(formItems)">导出</el-button>
+ </template>
+```
+
+
 ### elp-controller-table组件
 > elp-filter-operator、elp-table、elp-pagination、elp-dialog组合组件,通过tableColumns和searchParams来显示查询条件和列表，以提供的tableDataInterface接口来查询条件，重置、查询、分页自动绑定查询接口，行操作默认支持弹出框显示详情，弹出框保留slot来渲染内容；也可以通过设置dialogDefault来设置是否自己做具体的内容显示。（详细使用说明请往下看）
 
@@ -729,7 +755,45 @@ function formaterIconV(v){
 | dialogClosed  | 弹出框弹出事件
 | dialogDrag  | 弹出框弹出事件
 | dialogClose  | 弹出框弹出事件
-#### 6、示例
+#### 6、slot
+| name | 说明 | 参数 | 
+|----------|--------|---------|
+| default | 默认弹出框内容 | row
+| detail | 自定义内容 | row
+| filterButtons | 按钮默认是重置和查询 | 查询参数值
+| filterOtherButtons | 可以添加新的按钮 | 查询参数值
+* 查询参数值结构示例
+```js
+const formItems = [
+  {name: "name",value: "logmei"},
+  {name: "sex",value: "女"},
+  {name: "daterange",value: ["2019-09-01" , "2019-09-06"]},
+  {name: "date",value: "2019-09-01"},
+  {name: "guid",value: 0},
+  ]
+```
+* 使用示例
+```html
+   <template v-slot:filterButtons="formItems">
+      <el-button type="primary" @click="query(formItems)">查询</el-button>
+   </template>
+   <template v-slot:filterOtherButtons="formItems">
+       <el-button type="primary" @click="exportFile(formItems)">导出</el-button>
+   </template>
+  <!-- 使用默认弹出框
+   <template v-slot:default="row">
+     {{row}}
+   </template> -->
+  <!-- 自己编写弹出框 -->
+   <template v-slot:detail="row">
+     <elp-dialog
+     :visible.sync="dialogVisible"
+     >
+      first--------- {{row}}
+     </elp-dialog>
+   </template>
+```
+#### 7、示例
 * 1、elp-controller-table使用示例
 ```html
 <template>

@@ -3,6 +3,7 @@
  <el-tabs v-model="activeName" @tab-click="tabClick">
     <el-tab-pane label="用户管理" name="first">
       <elp-controller-table
+        ref="controllerTable"
         dialog-title="内容"
         border
         :table-data-interface="tableDataInterface"
@@ -17,6 +18,12 @@
         :clearable="true"
         @handle-click="dialogVisible=true"
         >
+        <template v-slot:filterButtons="formItems">
+          <el-button type="primary" @click="query(formItems)">查询</el-button>
+        </template>
+        <template v-slot:filterOtherButtons="formItems">
+          <el-button type="primary" @click="exportFile(formItems)">导出</el-button>
+        </template>
   <!-- 使用默认弹出框
     <template v-slot:default="row">
     {{row}}
@@ -136,6 +143,14 @@ export default {
         this.reload[0].reload=true
       })
       
+    },
+    query(formItems){
+      console.log('controllerTable',this.$refs.controllerTable.$refs.filterOperatorRef)
+      this.$refs.controllerTable.$refs.filterOperatorRef.query()
+      console.log('formItems',formItems)
+    },
+    exportFile(formItems){
+       console.log('formItems',formItems)
     }
   }
 }

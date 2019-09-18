@@ -60,8 +60,12 @@
     
     
     <el-form-item class="elp-operator-buttons">
-      <el-button @click="onReset">重置</el-button>
-      <el-button type="primary" @click="onSubmit">查询</el-button>
+      <slot name="buttons" v-bind="formItems">
+         <el-button @click="onReset">重置</el-button>
+         <el-button type="primary" @click="query">查询</el-button>
+      </slot>
+      <slot name="otherButtons" v-bind="formItems">
+      </slot>
     </el-form-item>
   </el-form>
 </template>
@@ -124,7 +128,7 @@
       ],
  */
 import { debounce } from '../../utils/index.js'
-
+import { getSearchParams } from './query.js'
 export default {
   name: 'ElpFilterOperator',
   props:{
@@ -161,10 +165,6 @@ export default {
         this.$set(this.formItems,index,{name:v.name,value:v.value})
       })
     },
-    //查询
-    onSubmit(){
-      this.query()
-    },
     //重置
     onReset(){
       this.formItems.map((v,index)=>{
@@ -174,16 +174,7 @@ export default {
       this.query()
     },
     query:debounce(function(){
-       const search = this.formItems.reduce((search,v,index)=>{
-         if(this.items[index].type === 'datepickerrange'){
-           search.startDate = v.value[0]
-           search.endDate = v.value[1]
-         }else{
-            search[v.name] = v.value
-         }
-         
-         return search
-      },{})
+      const search = getSearchParams(this.items,this.formItems)
       this.$emit('query',search)
     },1000,true)
   }
