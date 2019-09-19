@@ -25,6 +25,10 @@ const constantParams = {
         key: 'select',
         description: '选择框'
       },
+      SELECTINCHAIN: {
+        key: 'selectinchain',
+        description: '联动选择框'
+      },
       DATEPICKERRANGE: {
         key: 'datepickerrange',
         description: '日期范围',

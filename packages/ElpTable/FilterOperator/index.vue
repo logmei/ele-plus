@@ -25,6 +25,18 @@
         <el-option v-for="(option,i) in item.list" :key="i" :label="option.label" :value="option.key"></el-option>
       </el-select>
       </span>
+      <span v-if="item.type==='selectinchain'">
+        <el-select 
+        v-model="formItems[index].value" 
+        :placeholder="item.placeholder?item.placeholder:item.label"
+        :style="item.style ? item.style : ''"
+        :class="item.className ? item.className : ''"
+        :clearable="item.clearable !== undefined ? item.clearable : true"
+        @click="chooseSelectinchain"
+        >
+        <el-option v-for="(option,i) in item.list" :key="i" :label="option.label" :value="option.key"></el-option>
+      </el-select>
+      </span>
       <span v-else-if="item.type==='datepickerrange'">
         <el-date-picker
         v-model="formItems[index].value"
@@ -56,6 +68,8 @@
         </el-date-picker>
       </span>
     </el-form-item>
+    <slot name="formItems" v-bind="formItems">
+    </slot>
     </div>
     
     

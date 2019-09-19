@@ -74,7 +74,7 @@
   
 </template>
 <script>
-import TableList from './interface.js'//接口
+import TableList,{province,city,area} from './interface.js'//接口
 import contractColumns from './tableColumns.js'//table列说明
 // import ElpControllerTable from '../../../packages/ElpTable/ControllerTable' //单独引用
 let count=0
@@ -93,6 +93,9 @@ export default {
       searchParams:[
           {name:'name',type:'input',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
           {name:'sex',type:'select',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
+          {name:'province',type:'selectinchain',label:'省',interface:province,level:0},
+          {name:'city',type:'selectinchain',label:'市',interface:city,level:1},
+          {name:'area',type:'selectinchain',label:'区',interface:area,level:2},
           {
             name:'daterange'
             ,type:'datepickerrange'
