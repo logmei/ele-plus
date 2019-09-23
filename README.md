@@ -1,6 +1,6 @@
 ### [代码仓库](https://github.com/logmei/ele-plus.git)
 ## 版本详细说明，请查看doc下面的版本文件
-## 最新版本 v0.3.6
+## 最新版本 v0.4.4
 ## 安装
 ```
 npm install ele-plus -S
