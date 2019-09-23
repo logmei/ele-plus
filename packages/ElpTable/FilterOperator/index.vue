@@ -14,29 +14,19 @@
       <span v-else-if="item.type==='hidden'">
         <input v-model="formItems[index].value" type="hidden"/>
       </span>
-      <span v-if="item.type==='select'">
+      <span v-else-if="item.type==='select'">
         <el-select 
         v-model="formItems[index].value" 
         :placeholder="item.placeholder?item.placeholder:item.label"
         :style="item.style ? item.style : ''"
         :class="item.className ? item.className : ''"
         :clearable="item.clearable !== undefined ? item.clearable : true"
+         @change="item.inchain && item.inchain.Selectinchain ? chooseSelectinchain(index):''"
         >
-        <el-option v-for="(option,i) in item.list" :key="i" :label="option.label" :value="option.key"></el-option>
+        <el-option v-for="(option,i) in formItems[index].list" :key="i" :label="option.label" :value="option.key"></el-option>
       </el-select>
       </span>
-      <span v-if="item.type==='selectinchain'">
-        <el-select 
-        v-model="formItems[index].value" 
-        :placeholder="item.placeholder?item.placeholder:item.label"
-        :style="item.style ? item.style : ''"
-        :class="item.className ? item.className : ''"
-        :clearable="item.clearable !== undefined ? item.clearable : true"
-        @click="chooseSelectinchain"
-        >
-        <el-option v-for="(option,i) in item.list" :key="i" :label="option.label" :value="option.key"></el-option>
-      </el-select>
-      </span>
+    
       <span v-else-if="item.type==='datepickerrange'">
         <el-date-picker
         v-model="formItems[index].value"
@@ -68,8 +58,6 @@
         </el-date-picker>
       </span>
     </el-form-item>
-    <slot name="formItems" v-bind="formItems">
-    </slot>
     </div>
     
     
@@ -174,9 +162,29 @@ export default {
     this.setFormItemsValues()
   },
   methods:{
+    chooseSelectinchain(index){
+      // console.log('chooseSelectinchain',index,this.items[index+1].interface)
+      if(!this.items[index+1].inchain.interface)return
+      this.items[index+1].inchain.interface({parentId:this.formItems[index].value}).then(data=>{
+        // console.log('chooseSelectinchain data',data)
+      this.formItems[index+1].list = [{key:'',label:'全部'}].concat(data.result.map(v=>{
+          return {key:v.id,label:v.name}
+        }))
+      this.selectInchainInitDefault(index+1)
+      })
+    },
+    selectInchainInitDefault(index){
+      for(let i=index;i<this.formItems.length;i++){
+        if(this.items[i].inchain && this.items[i].inchain.child && this.items[i].inchain.child>0){
+          this.formItems[i].value = ''
+        }else{
+          return
+        }
+      }
+    },
     setFormItemsValues(){
       this.items.forEach((v,index)=>{
-        this.$set(this.formItems,index,{name:v.name,value:v.value})
+        v.list?this.$set(this.formItems,index,{name:v.name,value:v.value,list:v.list}):this.$set(this.formItems,index,{name:v.name,value:v.value})
       })
     },
     //重置

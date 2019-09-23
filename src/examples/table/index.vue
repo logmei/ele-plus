@@ -93,28 +93,37 @@ export default {
       searchParams:[
           {name:'name',type:'input',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
           {name:'sex',type:'select',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
-          {name:'province',type:'selectinchain',label:'省',interface:province,level:0},
-          {name:'city',type:'selectinchain',label:'市',interface:city,level:1},
-          {name:'area',type:'selectinchain',label:'区',interface:area,level:2},
+          {name:'province',type:'select',label:'省',value:'',inchain:{Selectinchain:true},list:[{key:'',label:'全部'},{key:'110000',label:'北京'},{key:'120000',label:'天津'}]},
+          {name:'city',type:'select',label:'市',value:'',inchain:{Selectinchain:true,child:1,interface:city},list:[{key:'',label:'全部'}]},
+          {name:'area',type:'select',label:'区',value:'',inchain:{child:2,interface:area},list:[{key:'',label:'全部'}]},
+          {name:'province1',type:'select',label:'省1',value:'',inchain:{Selectinchain:true},list:[{key:'',label:'全部'},{key:'110000',label:'北京'},{key:'120000',label:'天津'}]},
+          {name:'city1',type:'select',label:'市1',value:'',inchain:{Selectinchain:true,child:1,interface:city},list:[{key:'',label:'全部'}]},
+          {name:'area1',type:'select',label:'区1',value:'',inchain:{child:2,interface:area},list:[{key:'',label:'全部'}]},
           {
             name:'daterange'
             ,type:'datepickerrange'
             ,label:'选择日期范围'
-            ,value:['2019-09-01','2019-09-06']
+            ,value:undefined
             ,format:'yyyy-MM-dd'
             ,clearable:false
             , pickerOptions:{
-            disabledDate:(time) => {
-                let currentTime = Date.now()
-                let threeMonths = currentTime+24*60*60*1000
-                return time.getTime() < Date.now() || time.getTime() > threeMonths
-            }
+                onPick:({minDate})=>{
+                  // console.log('onPick',maxDate,minDate)
+                  this.selectDate = minDate
+                },
+                disabledDate:(time) => {
+                    let currentTime = new Date(this.selectDate)
+                    const thirtyOne = 31*24*60*60*1000
+                    const start = currentTime-thirtyOne
+                    const end = start+62*24*60*60*1000
+                    return time.getTime() > end || time.getTime() < start
+                }
           }
           },
           {name:'date'
           ,type:'datepicker'
           ,label:'选择日期'
-          ,value:'2019-09-01'
+          ,value:undefined
           ,format:'yyyy-MM-dd'
           ,valueFormat:'yyyy-MM-dd'
           ,clearable:false

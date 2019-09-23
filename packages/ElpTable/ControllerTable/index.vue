@@ -120,11 +120,11 @@ export default {
     },
     prevText: {
       type: String,
-      default: false
+      default: ''
     },
     nextText: {
       type: String,
-      default: false
+      default: ''
     },
     dialogDefault: {
       type: Boolean,
@@ -168,6 +168,7 @@ export default {
   methods: {
     query(search){
       console.log('search......',search)
+      this.pageNum=1
       this.search = search
       this.getTableDataList()
     },

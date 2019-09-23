@@ -1,7 +1,7 @@
 //获取参数值
 export function getSearchParams(items,formItems){
   const search = formItems.reduce((search,v,index)=>{
-    if(items[index].type === 'datepickerrange'){
+    if(items[index].type === 'datepickerrange' && typeof v.value === 'object'){
       search.startDate = v.value[0]
       search.endDate = v.value[1]
     }else{
