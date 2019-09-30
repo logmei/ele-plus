@@ -10,11 +10,11 @@
         :search-params="searchParams"
         :table-columns="contractColumns"
         :show-row-number="true"
-        :prevText="'上一页'+searchParams[4].value"
+        :prevText="'上一页'"
         :nextText="'下一页'"
         :dialogDefault="false"
         :reload.sync="reload[0].reload"
-        :pageSizes="[10,50,100]"
+        :pageSizes="[10,20,50,100]"
         :clearable="true"
         @handle-click="dialogVisible=true"
         >
@@ -50,7 +50,7 @@
         :nextText="'下一页'"
         :dialogDefault="false"
         :reload.sync="reload[1].reload"
-        :pageSizes="[10,50,100]"
+        :pageSizes="[10,20,50,100]"
         @handle-click="dialogVisible=true"
         >
   <!-- 使用默认弹出框
@@ -76,6 +76,7 @@
 <script>
 import TableList,{province,city,area} from './interface.js'//接口
 import contractColumns from './tableColumns.js'//table列说明
+import { type } from 'os'
 // import ElpControllerTable from '../../../packages/ElpTable/ControllerTable' //单独引用
 let count=0
 export default {
@@ -90,6 +91,24 @@ export default {
       tableDataInterface:TableList,//接口
       contractColumns:contractColumns,//列说明
       //查询条件form中的内容说明
+      // searchParams:[{
+      //   name:'province',
+      //   type:'input',
+      //   label:'省份',
+      //   value:'湖北省'
+      // },
+      // {
+      //   name:'area',
+      //   type:'input',
+      //   label:'市',
+      //   value:'黄陂区'
+      // },
+      // {
+      //   name:'city',
+      //   type:'input',
+      //   label:'区',
+      //   value:'武汉市'
+      // }]
       searchParams:[
           {name:'name',type:'input',label:'姓名',value:'',placeholder:'姓名1',style:{width:'200px'}},
           {name:'sex',type:'select',label:'性别',value:'0',list:[{key:'0',label:'女'},{key:'1',label:'男'}],className:'selectSex'},
@@ -102,21 +121,26 @@ export default {
           {
             name:'daterange'
             ,type:'datepickerrange'
+            ,alias:['startTime','endTime']
             ,label:'选择日期范围'
             ,value:undefined
             ,format:'yyyy-MM-dd'
-            ,clearable:false
+            ,clearable:true
             , pickerOptions:{
-                onPick:({minDate})=>{
+                onPick:({ maxDate, minDate })=>{
                   // console.log('onPick',maxDate,minDate)
-                  this.selectDate = minDate
+                  this.selectDate = maxDate || minDate
                 },
                 disabledDate:(time) => {
+                    // console.log('disabledDate',this.selectDate)
                     let currentTime = new Date(this.selectDate)
-                    const thirtyOne = 31*24*60*60*1000
+                    const thirtyOne = 30*24*60*60*1000
                     const start = currentTime-thirtyOne
-                    const end = start+62*24*60*60*1000
+                    const end = start+60*24*60*60*1000
                     return time.getTime() > end || time.getTime() < start
+                },
+                resetDisableDate:()=>{
+                  this.selectDate = undefined
                 }
           }
           },

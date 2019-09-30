@@ -4,7 +4,7 @@
     <el-form-item v-for="(item,index) in items" :key="index" :label="item.label">
       <span v-if="item.type==='input'">
         <el-input 
-        v-model="formItems[index].value" 
+        v-model.trim="formItems[index].value" 
         :placeholder="item.placeholder?item.placeholder:item.label"
         :style="item.style ? item.style : ''"
         :class="item.className ? item.className : ''"
@@ -12,7 +12,7 @@
         ></el-input>
       </span>
       <span v-else-if="item.type==='hidden'">
-        <input v-model="formItems[index].value" type="hidden"/>
+        <input v-model.trim="formItems[index].value" type="hidden"/>
       </span>
       <span v-else-if="item.type==='select'">
         <el-select 
@@ -29,7 +29,7 @@
     
       <span v-else-if="item.type==='datepickerrange'">
         <el-date-picker
-        v-model="formItems[index].value"
+        v-model.trim="formItems[index].value"
         type="daterange"
         range-separator="至"
         start-placeholder="开始日期"
@@ -40,12 +40,13 @@
         :class="item.className ? item.className : ''"
         :clearable="item.clearable !== undefined ? item.clearable : true"
         :picker-options="item.pickerOptions"
+        @change="datePickerChange(index)"
         >
        </el-date-picker>
       </span>
       <span v-else-if="item.type==='datepicker'">
         <el-date-picker
-          v-model="formItems[index].value"
+          v-model.trim="formItems[index].value"
           type="date"
           :placeholder="item.placeholder?item.placeholder:item.label"
           :format="item.format?item.format:'yyyy-MM-dd'"
@@ -54,6 +55,7 @@
           :class="item.className ? item.className : ''"
           :clearable="item.clearable !== undefined ? item.clearable : true"
           :picker-options="item.pickerOptions"
+          @change="datePickerChange(index)"
           >
         </el-date-picker>
       </span>
@@ -162,6 +164,13 @@ export default {
     this.setFormItemsValues()
   },
   methods:{
+    datePickerChange(index){
+      // console.log('datePickerChange value',this.formItems[index].value)
+      if(this.formItems[index].value === null){
+        this.items[index].pickerOptions && this.items[index].pickerOptions.resetDisableDate()
+      }
+
+    },
     chooseSelectinchain(index){
       // console.log('chooseSelectinchain',index,this.items[index+1].interface)
       if(!this.items[index+1].inchain.interface)return

@@ -1,5 +1,12 @@
+import request from "../../utils/request.js";
+
 export default function(params){
-   console.log('params',params)
+  //  console.log('params',params)
+  //  return request({
+  //   url: '/saasplatform/drugstore/list',
+  //   method: 'post',
+  //   data: params
+  // })
     return new Promise(resolve => {
       resolve(
         {
