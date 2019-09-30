@@ -237,7 +237,7 @@ export default {
 
   methods: {
     initFilters() {
-      // console.log('this.tableData', this.tableData)
+      console.log('this.tableData', this.tableData)
       this.tableData.forEach(data => {
         const cloumns = getTypeOf(this.tableColumns,'function') ? this.tableColumns(this) : this.tableColumns
         cloumns.forEach(v => {
