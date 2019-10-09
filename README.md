@@ -1,6 +1,6 @@
 ### [代码仓库](https://github.com/logmei/ele-plus.git)
 ## 版本详细说明，请查看doc下面的版本文件
-## 最新版本 v0.5.7
+## 最新版本 v0.6.0
 ## 安装
 ```
 npm install ele-plus -S
@@ -668,6 +668,8 @@ function formaterIconV(v){
   | 事件名 | 说明 | 参数 |
 |------|------------|------------|
 | query  | 点击回调和查询触发事件(已增加防抖)  | 查询条件已对象形式返回如：{name:'logmei',sex:'0'} |
+| onResetAndQuery  | 重置并查询（清空选项内容）  |  |
+| onReset  | 重置（清空选项内容）  |  |
 #### 6、items的数据结构
 | 字段名 | 类型 | 说明 | 
 |--------|----------|-------|
