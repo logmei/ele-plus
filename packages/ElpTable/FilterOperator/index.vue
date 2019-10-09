@@ -1,5 +1,16 @@
 <template>
-  <el-form :inline="true" class="elp-operator-form-inline">
+  <el-form 
+  ref="elpOperatorForm"
+  :inline="inline" 
+  :rules="rules"
+  :label-position="labelPosition"
+  :label-width="labelWidth"
+  :label-suffix="labelSuffix"
+  :show-message="showMessage"
+  :inline-message="inlineMessage"
+  :status-icon="statusIcon"
+  :size="size"
+  class="elp-operator-form-inline">
     <div class="elp-operator-params">
     <el-form-item v-for="(item,index) in items" :key="index" :label="item.label">
       <span v-if="item.type==='input'">
@@ -136,14 +147,59 @@ import { getSearchParams } from './query.js'
 export default {
   name: 'ElpFilterOperator',
   props:{
-    clearable:{
+    clearable: {
       type: Boolean,
       required: false,
       default: false
     },
-    items:{
+    items: {
       type: Array,
       required: true
+    },
+    inline: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    rules: {
+      type: Object,
+      required: false,
+      default: ()=>{}
+    },
+    labelPosition: {
+      type: String,
+      required: false,
+      default: 'right'
+    },
+    labelWidth: {
+      type: String,
+      required: false,
+      default:''
+    },
+    labelSuffix: {
+      type: String,
+      required: false,
+      default:''
+    },
+    showMessage: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    inlineMessage: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    statusIcon: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    size: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data(){
@@ -216,7 +272,8 @@ export default {
     query:debounce(function(){
       const search = getSearchParams(this.items,this.formItems)
       this.$emit('query',search)
-    },1000,true)
+    },1000,true),
+
   }
 }
 </script>
