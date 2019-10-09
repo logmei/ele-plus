@@ -65,7 +65,7 @@
     
     <el-form-item class="elp-operator-buttons">
       <slot name="buttons" v-bind="formItems">
-         <el-button @click="onReset">重置</el-button>
+         <el-button @click="onResetAndQuery">重置</el-button>
          <el-button type="primary" @click="query">查询</el-button>
       </slot>
       <slot name="otherButtons" v-bind="formItems">
@@ -196,13 +196,22 @@ export default {
         v.list?this.$set(this.formItems,index,{name:v.name,value:v.value,list:v.list}):this.$set(this.formItems,index,{name:v.name,value:v.value})
       })
     },
+    //重置并查询
+    onResetAndQuery(){
+      this.formItems.map((v,index)=>{
+        v.value = this.items[index].value
+        return v
+      })
+
+       this.query()
+    },
     //重置
     onReset(){
       this.formItems.map((v,index)=>{
         v.value = this.items[index].value
         return v
       })
-      this.query()
+     
     },
     query:debounce(function(){
       const search = getSearchParams(this.items,this.formItems)
