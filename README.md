@@ -1,6 +1,5 @@
 ### [代码仓库](https://github.com/logmei/ele-plus.git)
-## 版本详细说明，请查看doc下面的版本文件
-## 最新版本 v0.6.0
+## 最新版本 v1.0.0
 ## 安装
 ```
 npm install ele-plus -S
@@ -474,6 +473,7 @@ export default {
 | authority | 是否有多选操作权限 | Boolean | false | false|
 | clearSelectStatus | 清空多选框(监控该值发生改变会触发) |Number | false | 0
 | fit | 列的宽度是否自撑开 | Boolean | false | true|
+|  columnExpand| 列展开属性 | Boolean | false | false |
  #### 5、事件
   | 事件名 | 说明 | 参数 |
 |------|------------|------------|
@@ -642,6 +642,59 @@ function formaterIconV(v){
 |type|可修改对应el-button中的type|'primary'
 |styleType|可修改|'plain'|plain/round/disabled
 |icon|可修改||对应elementUI中的icon名称
+
+#### 使用示例
+##### 基础用法
+```html
+<elp-table 
+    :loading="listLoading" 
+    :table-data="dataTable" 
+    :table-columns="dataColumns" 
+    :border="true"
+    :fit="true"
+    @handleClick="handleClick"
+    />
+   
+```
+```js
+export default{
+  data(){
+    return {
+      listLoading: false,
+      dataTable:[],
+      dataColumns:addressListColumns,
+    }
+  },
+   methods:{
+    handleClick(row){
+      console.log('选中这行的数据',row)
+    }
+  }
+}
+```
+##### 增加展开效果
+```html
+ <elp-table
+  :table-data="tableData" 
+  :table-columns="tableColumns" 
+  :authority="true" 
+  :columnExpand="true">
+  <template v-slot:expand="row">
+    {{row}}
+  </template>
+  </elp-table>
+   
+```
+```js
+export default{
+  data(){
+    return {
+      dataTable:[],
+      dataColumns:addressListColumns,
+    }
+  }
+}
+```
 
 ### elp-filter-operator组件
 #### 1、引入

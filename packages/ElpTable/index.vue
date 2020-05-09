@@ -12,6 +12,11 @@
       @row-click="handleClick"
       @selection-change="handleSelectionChange"
     >
+    <el-table-column type="expand" v-if="columnExpand">
+      <template slot-scope="scope">
+        <slot name="expand" v-bind="scope.row"></slot>
+      </template>
+    </el-table-column>
       <el-table-column
         v-if="authority&&showSelection"
         type="selection"
@@ -218,6 +223,10 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    columnExpand:{
+      type : Boolean,
+      required: false
     }
   },
   data() {
