@@ -3,7 +3,7 @@
     <el-table
       ref="multipleTable"
       v-loading="loading"
-      :data="tableData"
+      :data="datas"
       tooltip-effect="dark"
       :border="border"
       :fit="fit"
@@ -58,7 +58,7 @@
           <span v-if="!item.valueType || (item.valueType&&item.valueType==='data')">
             
             <span v-if="(!scope.row[item.name].value || scope.row[item.name].value==='') && ( !scope.row[item.name].icon || scope.row[item.name].icon ==='')" slot="reference">
-              ------
+               ------
             </span>
             <span class="elp-table__cell" v-else-if="scope.row[item.name].icon && scope.row[item.name].icon !==''" slot="reference">
               <i :class="'el-icon-'+scope.row[item.name].icon"></i>
@@ -172,7 +172,7 @@
   }
 ]
  */
-import { getTypeOf } from '../utils/index.js'
+import { getTypeOf,deepClone } from '../utils/index.js'
 export default {
   name:'ElpTable',
   props: {
@@ -231,23 +231,31 @@ export default {
   },
   data() {
     return {
-      multipleSelection: []
+      multipleSelection: [],
+      datas:[]
     }
   },
+
   watch: {
     tableData: {
-      handler: 'initFilters'
-      // deep: true
+      handler: 'init',
+      deep: true
     },
     clearSelectStatus: function() {
       this.multipleSelection = []
     }
   },
-
+  beforeMount(){
+    this.datas = deepClone(this.tableData)
+  },
   methods: {
+    init(){
+      this.datas = deepClone(this.tableData)
+      this.initFilters()
+    },
     initFilters() {
       console.log('this.tableData', this.tableData)
-      this.tableData.forEach(data => {
+      this.datas.forEach(data => {
         const cloumns = getTypeOf(this.tableColumns,'function') ? this.tableColumns(this) : this.tableColumns
         cloumns.forEach(v => {
           if (v.formater) {
