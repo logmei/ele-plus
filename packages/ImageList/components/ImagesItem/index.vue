@@ -2,15 +2,22 @@
   <div class="images-class">
     <div class="title">{{ title }}</div>
     <div class="content">
+      <div 
+       v-for="(item,index) in list"
+      class="content-image-class"
+      >
       <img
-        v-for="(item,index) in list"
         :key="index"
-        :src="item"
+        :src="item.url || item"
         :title="windowOpenImgSwitch ? '按住ctrl键点击：打开新窗口':''"
         :style="imgsStyle"
         @click.exact="showImgLarge(index)"
         @click.ctrl.exact="windowOpenImg(index)"
       >
+      <div class="sub-description-class" v-if="item.describe">{{item.describe}}</div>
+
+      </div>
+      
     </div>
   </div>
 </template>
@@ -38,10 +45,10 @@ export default {
   methods: {
     showImgLarge(index) {
       this.page = index
-      this.src = typeof this.list[index] === 'object' ? this.list[index].value : this.list[index]
+      this.src = typeof this.list[index] === 'object' ? this.list[index].url : this.list[index]
       // this.ImgLargeHtml = `<img src="${src}" width="750px">`
 
-      this.$emit('showImgLarge', this.src)
+      this.$emit('showImgLarge', this.list[index].url||this.list[index])
     },
     windowOpenImg(index) {
       if (!this.windowOpenImgSwitch) return
@@ -62,6 +69,8 @@ export default {
       margin: 8px;
     }
     .content{
+     display: flex;
+    justify-content: center;
         img{
             border-radius: 5px;
             margin-right:10px;
@@ -73,6 +82,13 @@ export default {
             box-shadow: 0 0 2px #60b7b7,0 0 2px #60b7b7;
             cursor: pointer;
         }
+    }
+    .content-image-class{
+      display: inline-block;
+      .sub-description-class{
+         font-size: 12px;
+         font-weight: 500;
+      }
     }
 
 }

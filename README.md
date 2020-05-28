@@ -186,7 +186,8 @@ import {ShortCut} from 'ele-plus'
   > * 2、imageUrl：[String],必填项，
   > * 3、shadowType：[Boolean],默认值true（显示遮罩层）。是否显示遮罩层
   > * 4、imageStyle：[Object],默认值{height: '800px'}
-  > * 5、imageList：[Array],必填项，结构可为['imgurl1','imgurl2'...]，也可为[{title:'title1',list:['imgurl1','imgurl2'...]}]
+  > * 5、imageList：[Array],必填项，结构可为['imgurl1','imgurl2'...]，也可为[{title:'title1',list:['imgurl1','imgurl2'...]]
+
   > ##### 示例：
   ```js
     <elp-image-of-self-dialog
@@ -301,7 +302,7 @@ import {ShortCut} from 'ele-plus'
   > * 2、dialogType：[String],默认值'self'。self:不带工具栏，images:带工具栏
   > * 3、shadow：[Boolean],默认值true（显示遮罩层）。是否显示遮罩层
   > * 4、imageStyle：[Object],默认值{height: '800px'}
-  > * 5、imageList：[Array],必填项，结构可为[{title:'title1',list:['imgurl1','imgurl2'...]}]
+  > * 5、imageList：[Array],必填项，结构可为[{title:'title1',list:['imgurl1','imgurl2'...]}]，新增加说明字段describe,结构如[{title:'title1',list:[{url:'imgurl1',describe:'imgurl1-describe'},'imgurl2'...]]
   > * 6、imgsStyle：[Object],默认值{width:'250px',height:'170px'}，提供图片列表中的小图片样式
   > ##### 示例：
   ```js
@@ -342,7 +343,8 @@ export default {
         {
           title:'title-01',
           list:[
-            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566558427557&di=01d80d552ef025f54a6a2dff52432a98&imgtype=0&src=http%3A%2F%2Fi1.17173.itc.cn%2F2009%2Fkx%2F2009%2F06%2F16%2F20090616171420490.jpg',
+             {url:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566558427557&di=01d80d552ef025f54a6a2dff52432a98&imgtype=0&src=http%3A%2F%2Fi1.17173.itc.cn%2F2009%2Fkx%2F2009%2F06%2F16%2F20090616171420490.jpg',
+            describe:'2F06%2F16%2F20090616171420490.jpg'},
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566558427557&di=5781beb0f17d4f665d4cc20cb803775b&imgtype=0&src=http%3A%2F%2Fpic.k73.com%2Fup%2Fsoft%2F2016%2F0102%2F092635_44907394.jpg',
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566558427557&di=c9d6906dfc54e9a286c8cf3199072660&imgtype=0&src=http%3A%2F%2Fwww.sx198.com%2Fp%2F84%2Fimage%2F201611%2F1479608859183678447.gif'
             ]},
