@@ -517,7 +517,19 @@ import { ConstantParams } from 'ele-plus'
     width: 50
   },
   { label: '编号', name: 'number', fixed: 'left',formater:formaterIconV },
-  { label: '名称', name: 'title', fixed: 'left', minWidth: 155 },
+   {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: '名称',
+    name: '',
+    value: [{
+      label: '查看',
+      autoLabel:(row)=>row.title,//动态返回label值，存在autoLabel后，label将不起作用
+      entity: Object.assign({},ConstantParams.TABLECOLUMNSTYPE.BUTTON,{type:'text'}),//添加按钮样式
+      callBackFunName: 'showOrderDetail',//点击返回的回调函数
+    }
+    ]
+  },
   { label: '使用名', name: 'name', fixed: 'left' },
   { label: 'ID', name: 'mechNo' },
   { label: '账号', name: 'account' },
@@ -539,11 +551,13 @@ import { ConstantParams } from 'ele-plus'
     value: [{
       label: '编辑',
       entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
-      callBackFunName: 'show3'
+      callBackFunName: 'show3',
+      showFun:(row)=>row.state === 1 //根据row中的state值动态判断按钮是否显示
     },
     { label: '查看',
       entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
-      callBackFunName: 'show4'
+      callBackFunName: 'show4',
+      showFun:(row)=>row.state === 2 //根据row中的state值动态判断按钮是否显示
     }
     ],
     fixed: 'right',

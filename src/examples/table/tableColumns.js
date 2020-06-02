@@ -3,8 +3,21 @@ import { ConstantParams } from '../../../packages/index.js'
 // 合同列表列
 const contractColumns = [
   { label: '合同名称', name: 'title', fixed: 'left', minWidth: 155 ,formater: formaterIconV},
+  {
+    authority: true,
+    valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
+    label: '合同名称',
+    name: '',
+    value: [{
+      label: '查看',
+      autoLabel:(DTO)=>DTO.state,
+      entity: Object.assign({},ConstantParams.TABLECOLUMNSTYPE.BUTTON,{type:'text'}),
+      callBackFunName: 'showOrderDetail',
+    }
+    ]
+  },
   { label: '客户名称', name: 'name', fixed: 'left' },
-  { label: '机构ID', name: 'mechNo' },
+  // { label: '机构ID', name: 'mechNo' },
   { label: '智慧脸账号', name: 'account' },
   { label: '省份', name: 'province' },
   { label: '签约类型', name: 'signTypeVal' },
@@ -24,14 +37,22 @@ const contractColumns = [
     valueType: ConstantParams.TABLECOLUMNSTYPE.BUTTON.key,
     label: ConstantParams.TABLECOLUMNSTYPE.BUTTON.label,
     name: '',
+    fixed:'right',
+    width:280,
     value: [{
-      label: '查看',
-      entity: ConstantParams.TABLECOLUMNSTYPE.BUTTON,
-      callBackFunName: 'handleClick'
+      label: '详情',
+      entity:Object.assign({},ConstantParams.TABLECOLUMNSTYPE.BUTTON,{icon:'tickets'}) ,
+      callBackFunName: 'handleDetail',
+      showFun:(DTO)=>DTO.state === 1
+    },
+    {
+      label: '处理',
+      entity: Object.assign({},ConstantParams.TABLECOLUMNSTYPE.BUTTON,{icon:'edit-outline'}),
+      callBackFunName: 'handleClick',
+      showFun:(DTO)=>DTO.state===1 || DTO.state===3
     }
     ],
-    fixed: 'right',
-    width: 100
+   
   }
 ]
 // 年月日时分

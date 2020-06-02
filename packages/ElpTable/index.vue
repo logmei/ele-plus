@@ -44,6 +44,7 @@
           <span v-if="item.valueType==='button'&& !rowClick" class="elp-operator-class">
             <el-button 
             v-for="(button,i) in item.value" 
+            v-if="!button.showFun || (button.showFun && button.showFun(scope.row))"
             :key="i" 
             :type="button.entity.type" 
             :plain="button.entity.styleType==='plain'" 
@@ -52,7 +53,7 @@
             :icon="button.entity.icon?'el-icon-'+button.entity.icon:''"
             @click="clickButton(scope.row,button.callBackFunName)"
             >
-            {{ button.label }}
+         {{ button.autoLabel?button.autoLabel(scope.row):button.label }}
             </el-button>
           </span>
           <span v-if="!item.valueType || (item.valueType&&item.valueType==='data')">

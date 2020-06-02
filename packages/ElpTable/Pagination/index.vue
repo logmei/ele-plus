@@ -105,10 +105,18 @@ export default {
 }
 </script>
 
-<style scoped>
-.pagination-container {
+<style lang="scss" scoped>
+.pagination-container /deep/{
   background: #fff;
   padding: 32px 16px;
+  text-align: right;
+  .el-pagination{
+    text-align: right;
+    .btn-prev,.btn-next{
+      padding: 0 5px;
+    }
+  }
+  
 }
 .pagination-container.hidden {
   display: none;
